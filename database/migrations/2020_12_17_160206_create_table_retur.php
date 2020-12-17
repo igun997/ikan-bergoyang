@@ -17,6 +17,9 @@ class CreateTableRetur extends Migration
             $table->bigIncrements('id');
             $table->integer('transaksi_id');
             $table->string('reason');
+            $table->string('bukti_barang');
+            $table->integer('status');
+            $table->integer('noresi');
             $table->timestamps();
         });
     }

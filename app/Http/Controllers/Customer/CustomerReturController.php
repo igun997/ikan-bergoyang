@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Transaksi;
 
 class CustomerReturController extends Controller
 {
@@ -35,7 +36,9 @@ class CustomerReturController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        
     }
 
     /**
@@ -46,7 +49,8 @@ class CustomerReturController extends Controller
      */
     public function show($id)
     {
-        echo $id;
+        $data['transaksi'] = Transaksi::where('id', $id)->first();
+        return view('customer.retur.pengajuan-retur', $data);
     }
 
     /**

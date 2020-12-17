@@ -43,6 +43,9 @@
                 <th>Transaksi ID</th>
                 <th>Tanggal Dibuat</th>
                 <th>Alasan</th>
+                <th>Bukti Barang</th>
+                <th>Status</th>
+                <th>Nomor Resi</th>
                 <th class="text-center">Actions</th>
             </tr>
             </thead>
@@ -52,7 +55,10 @@
                     <td>{{ $loop->iteration}}</td>
                     <td>#{{ $retur->transaksi_id }}</td>
                     <td>{{ $retur->created_at }}</td>
-                    <td><?= $retur->reason ?></td>
+                    <td>{{ $retur->reason }}</td>
+                    <td>{{ $retur->bukti_barang }}</td>
+                    <td>{{ $retur->status }}</td>
+                    <td>{{ $retur->noresi }}</td>
                     <td class="text-center">
                         <a href="{{ url('/admin/retur/'.$retur->id) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                         {{-- <a href="#" class="btn btn-danger btnDelete" data-url="{{ url('/admin/retur/'.$retur->id) }}"><i class="fa fa-trash"></i></a> --}}

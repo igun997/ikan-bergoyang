@@ -97,7 +97,7 @@
                     <textarea class="form-control" name="deskripsi" cols="20" rows="5" placeholder="Masukan deskripsi barang">{{ @old('deskripsi') ?? @$barang->deskripsi }}</textarea>
                 </div>
             </div>
-            <div class="form-group row">
+            <div v class="form-group row">
                 <div class="col-md-12 text-right">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
