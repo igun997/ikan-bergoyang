@@ -19,6 +19,7 @@ Route::get('/', 'Customer\HomeController@index');
 Route::get('/produk', 'Customer\ProdukController@index');
 Route::get('/produk/{id}', 'Customer\ProdukController@show');
 Route::get('/register', 'Auth\RegisterController@index');
+// Route::get('retur', 'Customer\CustomerReturController@index');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::group(['middleware' => 'can:isAdmin', 'prefix' => 'admin'], function(){
@@ -45,6 +46,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::resource('/pembelian', 'Admin\PembelianController');
         Route::get('/penerimaan/{id}', 'Admin\PembelianController@terimaBarang');
         Route::get('/pembelian/{id}/print', 'Admin\PembelianController@printFaktur');
+        
+        Route::resource('retur', 'Admin\AdminReturController');
     });
     Route::group(['middleware' => 'can:isCustomer'], function(){
         Route::post('/cart/checkout', 'Customer\CartController@checkout');
@@ -57,8 +60,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/order', 'Customer\OrderController@index');
         Route::get('/order/{id}', 'Customer\OrderController@detail');
         Route::resource('/pemesanan','Customer\PemesananController');
-        Route::get('/upload', 'Customer\UploadController@upload');
-        Route::post('/upload/proses', 'Customer\UploadController@proses_upload');
+        // Route::get('/upload', 'Customer\UploadController@upload');
+        // Route::post('/upload/proses', 'Customer\UploadController@proses_upload');
         Route::get('/confirm-accept/{id}', 'Customer\OrderController@accept');
 
         Route::get('/get-kota/{idprovinsi}', 'Customer\CheckoutController@getKota');
@@ -66,6 +69,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('profil', 'Customer\ProfilController@index');
         Route::get('profil/edit', 'Customer\ProfilController@edit');
         Route::post('profil/update', 'Customer\ProfilController@update');
+        
+        Route::resource('retur', 'Customer\CustomerReturController');
     });
 });
 
