@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Transaksi;
+use App\DetailTransaksi;
+use App\Retur;
 
 class CustomerReturController extends Controller
 {
@@ -38,7 +42,29 @@ class CustomerReturController extends Controller
     {
         $input = $request->all();
 
-        
+        $validate = Validator::make($input, [
+            'transaksi_id' => 'required',
+            'reason' => 'required',
+            'bukti_barang' => 'required|mimes:png,jpeg,jpg',
+            'status' => 'required'
+        ]);
+
+        if($validate->fails()){
+            return redirect()->back()->withErrors($validate->errors())->withInput($input);
+        }else {
+            if ($request->has('bukti_barang')) {
+                $imageName = 'retur'.'-'.$input['transaksi_id'].'-'.time() . '.' . $input['bukti_barang']->getClientOriginalExtension();
+                $input['bukti_barang']->storeAs('bukti-barang', $imageName, 'public_uploads');
+                $input['bukti_barang'] = $imageName;
+            }
+
+            $query = Retur::create($input);
+            if ($query) {
+                return redirect()->back()->with('info', 'Data barang berhasil ditambahkan.');
+            } else {
+                return redirect()->back()->with('error', 'Data barang gagal ditambahkan.')->withInput($input);
+            }
+        }
     }
 
     /**
@@ -50,6 +76,7 @@ class CustomerReturController extends Controller
     public function show($id)
     {
         $data['transaksi'] = Transaksi::where('id', $id)->first();
+        $data['detail_transaksi'] = DetailTransaksi::where('transaksi_id', $id)->first();
         return view('customer.retur.pengajuan-retur', $data);
     }
 

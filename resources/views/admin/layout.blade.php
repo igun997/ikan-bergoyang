@@ -148,7 +148,7 @@ MAIN CONTENT LAYOUT
                         <li><a href="{{ url('/admin/transaksi') }}" class="{{ request()->is('admin/transaksi*') ? 'active' : '' }}"><i class="si si-logout"></i> <span class="sidebar-mini-hide">Transaksi Penjualan</span></a></li>
                         <li><a href="{{ url('/admin/pembayaran') }}" class="{{ request()->is('admin/pembayaran') ? 'active' : '' }}"><i class="si si-drawer"></i> <span class="sidebar-mini-hide">Konfirmasi Bayar</span></a></li>
                         <li><a href="{{ url('/admin/pengiriman') }}" class="{{ request()->is('admin/pengiriman') ? 'active' : '' }}"><i class="si si-note"></i> <span class="sidebar-mini-hide">Kirim Resi</span></a></li>
-                        <li><a href="{{ url('/admin/retur') }}" class="{{ request()->is('admin/retur') ? 'active' : '' }}"><i class="si si-drop"></i> <span class="sidebar-mini-hide">Retur Barang</span></a></li>
+                        <li><a href="{{ url('/admin/retur') }}" class="{{ request()->is('admin/retur') ? 'active' : '' }}"><i class="si si-docs"></i> <span class="sidebar-mini-hide">Retur Barang</span></a></li>
                     </ul>
                 </div>
             </div>

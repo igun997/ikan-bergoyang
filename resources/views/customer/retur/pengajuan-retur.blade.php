@@ -27,40 +27,44 @@
                     <div class="col-lg-12 order-1 order-lg-2">
                         <div id="productmain" class="row">
                             <div class="col-12">
-                                <h3>Pengajuan Retur Order ID #{{$transaksi->id}}</h3>
+                                <h3>Pengajuan Retur Order ID #{{ $transaksi->id }}</h3>
                                 <hr>
                             </div>
                             <div class="col-6">
-                                <p>Jenis Barang    : {{$transaksi->delivery->nama}}</p>
-                                <p>Jumlah Barang   : {{$transaksi->delivery->email}}</p>
-                                <p>Status Barang   : {{$transaksi->transaksistatus->keterangan}}</p>
+                                <p>Penerima    : {{ $transaksi->delivery->nama }}</p>
+                                <p>Jenis Barang    : {{ $detail_transaksi->barang->nama_barang }}</p>
+                                <p>Jumlah Barang   : {{ $detail_transaksi->qty }}</p>
+                                <p>Status Barang   : {{ $transaksi->transaksistatus->keterangan }}</p>
                             </div>
                             <div class="col-12">
                                 <br>
                                 <div class="block-content">
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="reason">Alasan Retur Barang :</label>
-                                            <div class="col-md-12">
-                                                <textarea class="form-control" name="reason" cols="20" rows="5" placeholder="Masukkan Alasan Retur Barang">{{ @old('reason') ?? @$retur->reason }}</textarea>
+                                    <form class="form-horizontal" action="{{ url('retur') }}" method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <label for="reason">Alasan Retur Barang :</label>
+                                                <div class="col-md-12">
+                                                    <textarea class="form-control" name="reason" cols="20" rows="5" placeholder="Masukkan Alasan Retur Barang">{{ @old('reason') ?? @$retur->reason }}</textarea>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="bukti_barang">Upload Gambar Barang</label>
-                                            <div class="col-lg-10">
-                                                {{-- benerin src gambarnya --}}
-                                                <img class="img-preview" src="{{ @$retur->bukti_barang ? asset('uploads/bukti-retur/'.$retur->bukti_barang) : '' }}" alt="" onerror="this.src='{{ asset('admin-asset/assets/img/avatars/avatar0.jpg') }}'">
-                                                <input type="file" name="bukti_barang" class="bukti_barang" accept="image/jpeg;images/png">
+                                        <input type="hidden" name="transaksi_id" class="transaksi_id" value="{{ $transaksi->id }}">
+                                        <input type="hidden" name="status" class="status" value="{{ 8 }}">
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <label for="bukti_barang">Upload Gambar Barang</label>
+                                                <div class="col-lg-10">
+                                                    <input type="file" name="bukti_barang" class="bukti_barang" accept="image/jpeg;images/png">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div v class="form-group row">
-                                        <div class="col-md-12 text-right">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        <div v class="form-group row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

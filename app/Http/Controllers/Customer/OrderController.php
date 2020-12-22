@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Transaksi;
 use App\Http\Controllers\Controller;
+use App\Retur;
 use Carbon\Carbon;
 
 class OrderController extends Controller
@@ -12,16 +13,23 @@ class OrderController extends Controller
     {
         $now = Carbon::now();
         $transaksi = Transaksi::where('user_id', auth()->user()->id)->get();
+        // $transaksi_id = [];
         foreach($transaksi as $order){
             if($now > $order->kadaluarsabayar && $order->status == 1)
                 $order->status = 6;
+            
+            // $returs = implode(', ', $order->id);
         }
+        $data['returs'] = Retur::all();
         $data['orders'] = $transaksi;
+        // $data['returs'] = Retur::where('transaksi_id', $returs)->get();
+        // echo($data['returs']);
         return view('customer.order', $data);
     }
 
     public function detail($id){
         $data['transaksi'] = Transaksi::where('id', $id)->first();
+        $data['retur'] = Retur::where('transaksi_id', $id)->first();
         return view('customer.order-detail', $data);
     }
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Retur;
+use App\TransaksiStatus;
+
 class AdminReturController extends Controller
 {
     /**
@@ -15,7 +17,7 @@ class AdminReturController extends Controller
     public function index()
     {
         $data['title'] = 'Daftar Retur Penjualan';
-        $data['returs'] = Retur::where('transaksi_id',1)->get();
+        $data['returs'] = Retur::all();
         return view('admin.retur.index',$data);
     }
 
