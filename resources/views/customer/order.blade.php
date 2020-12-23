@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <? php if(@$returs != null) { ?>
+            <?php if($returs != null) { ?>
                 <div class="container">
                     <div class="row">
                         <div id="basket" class="col-lg-12">
@@ -75,7 +75,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Transaksi ID</th>
+                                                <th>No. Inv</th>
                                                 <th>Tanggal Dibuat</th>
                                                 <th>Alasan</th>
                                                 <th>Bukti Barang</th>
@@ -84,13 +84,15 @@
                                                     <?php if($retur->noresi != null){ ?>
                                                         <th>Nomor Resi</th>
                                                     <?php } ?>
+                                                @endforeach
                                                 <th class="text-center">Actions</th>
-                                            </tr>
+                                                </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach($returs as $retur)
                                                     <tr>
                                                         <td>{{ $loop->iteration}}</td>
-                                                        <td>#{{ $retur->transaksi_id }}</td>
+                                                        <td><strong>#{{ $retur->transaksi_id }}</strong></td>
                                                         <td>{{ $retur->created_at }}</td>
                                                         <td>{{ $retur->reason }}</td>
                                                         <td>
@@ -102,7 +104,7 @@
                                                         <?php } ?>
                                                         <td class="text-center">
                                                             {{-- <a href="{{ url('/admin/retur/'.$retur->id) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a> --}}
-                                                            {{-- <a href="#" class="btn btn-danger btnDelete" data-url="{{ url('/admin/retur/'.$retur->id) }}"><i class="fa fa-trash"></i></a> --}}
+                                                            <a href="{{ url('/customer/retur/'.$retur->id) }}" class="btn btn-danger btnDelete" data-url="{{ url('/customer/retur/'.$retur->id) }}"><i class="fa fa-times" title="Cancel retur"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -113,7 +115,7 @@
                         </div>
                     </div>
                 </div>
-            <? php } ?>
+            <?php } ?>
         </div>
     </div>
 @endsection

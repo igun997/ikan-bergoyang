@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Transaksi;
 use App\DetailTransaksi;
 use App\Retur;
+use Illuminate\Support\Facades\DB;
 
 class CustomerReturController extends Controller
 {
@@ -41,6 +42,7 @@ class CustomerReturController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        $id = $request->get('transaksi_id');
 
         $validate = Validator::make($input, [
             'transaksi_id' => 'required',
@@ -58,8 +60,19 @@ class CustomerReturController extends Controller
                 $input['bukti_barang'] = $imageName;
             }
 
+            // foreach ($input as $inp) {
+            //     DB::table('transaksi')
+            //         ->where('id', $id)
+            //         ->update([
+            //             'status' => $inp['status']
+            //         ]);
+            // }
+
+            $stat = Transaksi::where('id', $id)->update(['status' => $input['status']]);
+
             $query = Retur::create($input);
-            if ($query) {
+
+            if ($query && $stat) {
                 return redirect()->back()->with('info', 'Data barang berhasil ditambahkan.');
             } else {
                 return redirect()->back()->with('error', 'Data barang gagal ditambahkan.')->withInput($input);
