@@ -17,13 +17,9 @@ class OrderController extends Controller
         foreach($transaksi as $order){
             if($now > $order->kadaluarsabayar && $order->status == 1)
                 $order->status = 6;
-            
-            // $returs = implode(', ', $order->id);
         }
         $data['returs'] = Retur::all();
         $data['orders'] = $transaksi;
-        // $data['returs'] = Retur::where('transaksi_id', $returs)->get();
-        // echo($data['returs']);
         return view('customer.order', $data);
     }
 

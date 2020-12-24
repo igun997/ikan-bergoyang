@@ -60,22 +60,14 @@ class CustomerReturController extends Controller
                 $input['bukti_barang'] = $imageName;
             }
 
-            // foreach ($input as $inp) {
-            //     DB::table('transaksi')
-            //         ->where('id', $id)
-            //         ->update([
-            //             'status' => $inp['status']
-            //         ]);
-            // }
-
             $stat = Transaksi::where('id', $id)->update(['status' => $input['status']]);
 
             $query = Retur::create($input);
 
             if ($query && $stat) {
-                return redirect()->back()->with('info', 'Data barang berhasil ditambahkan.');
+                return redirect()->to('/order')->with('info', 'Retur Berhasil Diajukan');
             } else {
-                return redirect()->back()->with('error', 'Data barang gagal ditambahkan.')->withInput($input);
+                return redirect()->back()->with('error', 'Pengajuan Retur Gagal.')->withInput($input);
             }
         }
     }
@@ -124,7 +116,14 @@ class CustomerReturController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cancel = Retur::where('transaksi_id',$id);
+        $stat = Transaksi::where('id', $id)->update(['status' => 5]);
+        $query = $cancel->delete();
+        if ($query && $stat) {
+            return redirect()->back()->with('info', 'Data retur berhasil dihapus.');
+        } else {
+            return redirect()->back()->with('error', 'Data retur gagal dihapus.');
+        }
     }
 
 }

@@ -62,12 +62,11 @@
                     </div>
                 </div>
             </div>
-            <?php if($returs != null) { ?>
+            <?php if($returs->count() != 0) { ?>
                 <div class="container">
                     <div class="row">
                         <div id="basket" class="col-lg-12">
                             <div class="box">
-                                @include('message')
                                 <h1>List Retur</h1>
                                 <p class="text-muted">You currently have {{ $returs->count() }} retur(s).</p>
                                 <div class="table-responsive">
@@ -79,36 +78,39 @@
                                                 <th>Tanggal Dibuat</th>
                                                 <th>Alasan</th>
                                                 <th>Bukti Barang</th>
-                                                <th>Status</th>
+                                                {{-- <th>Status</th> --}}
                                                 @foreach($returs as $retur)
                                                     <?php if($retur->noresi != null){ ?>
                                                         <th>Nomor Resi</th>
                                                     <?php } ?>
                                                 @endforeach
                                                 <th class="text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($returs as $retur)
+                                                <tr>
+                                                    <td>{{ $loop->iteration}}</td>
+                                                    <td><strong>#{{ $retur->transaksi_id }}</strong></td>
+                                                    <td>{{ $retur->created_at }}</td>
+                                                    <td>{{ $retur->reason }}</td>
+                                                    <td>
+                                                        <a target="_blank" href="{{ url('uploads/bukti-barang/') }}/{{$retur->bukti_barang}}">Lihat Bukti Barang</a>
+                                                    </td>
+                                                    {{-- <td>{{ $retur->status }}</td> --}}
+                                                    <?php if($retur->noresi != null){ ?>
+                                                        <td>{{ $retur->noresi }}</td>
+                                                    <?php } ?>
+                                                    <td class="text-center">
+                                                        <a href="#" class="btn btn-danger btnDelete"><i class="fa fa-times" title="Cancel retur"></i></a>
+                                                    </td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($returs as $retur)
-                                                    <tr>
-                                                        <td>{{ $loop->iteration}}</td>
-                                                        <td><strong>#{{ $retur->transaksi_id }}</strong></td>
-                                                        <td>{{ $retur->created_at }}</td>
-                                                        <td>{{ $retur->reason }}</td>
-                                                        <td>
-                                                            <a target="_blank" href="{{ url('uploads/bukti-barang/') }}/{{$retur->bukti_barang}}">Lihat Bukti Barang</a>
-                                                        </td>
-                                                        <td>{{ $retur->status }}</td>
-                                                        <?php if($retur->noresi != null){ ?>
-                                                            <td>{{ $retur->noresi }}</td>
-                                                        <?php } ?>
-                                                        <td class="text-center">
-                                                            {{-- <a href="{{ url('/admin/retur/'.$retur->id) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a> --}}
-                                                            <a href="{{ url('/customer/retur/'.$retur->id) }}" class="btn btn-danger btnDelete" data-url="{{ url('/customer/retur/'.$retur->id) }}"><i class="fa fa-times" title="Cancel retur"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
+                                            @endforeach
+                                            <form action="{{ url('retur/'.$retur->transaksi_id) }}" method="post" id="formDelete" class="d-none">
+                                                @csrf
+                                                @method('delete')
+                                            </form>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
