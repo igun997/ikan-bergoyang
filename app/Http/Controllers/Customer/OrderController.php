@@ -13,12 +13,13 @@ class OrderController extends Controller
     {
         $now = Carbon::now();
         $transaksi = Transaksi::where('user_id', auth()->user()->id)->get();
+        $retur = Retur::where('user_id', auth()->user()->id)->get();
         // $transaksi_id = [];
         foreach($transaksi as $order){
             if($now > $order->kadaluarsabayar && $order->status == 1)
-                $order->status = 6;
+            $order->status = 6;
         }
-        $data['returs'] = Retur::all();
+        $data['returs'] = $retur;
         $data['orders'] = $transaksi;
         return view('customer.order', $data);
     }

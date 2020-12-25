@@ -50,6 +50,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/pembelian/{id}/print', 'Admin\PembelianController@printFaktur');
         
         Route::resource('retur', 'Admin\AdminReturController');
+        Route::get('/confirm-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@confirmRetur');
+        Route::get('/reject-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@rejectRetur');
     });
     Route::group(['middleware' => 'can:isCustomer'], function(){
         Route::post('/cart/checkout', 'Customer\CartController@checkout');

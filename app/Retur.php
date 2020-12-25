@@ -8,14 +8,19 @@ class Retur extends Model
 {
     protected $table = 'retur';
     protected $fillable = [
-        'id', 'transaksi_id', 'reason', 'bukti_barang', 'status', 'noresi'
+        'id', 'transaksi_id', 'reason', 'bukti_barang', 'status', 'noresi', 'user_id'
     ]; 
 
     public function transaksi(){
-        return $this->hasOne('App\Transaksi', 'id', 'iduser');
+        return $this->hasOne('App\Transaksi', 'id', 'transaksi_id');
     }
 
-    public function status()
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id', 'user_id');
+    }
+
+    public function transaksistatus()
     {
         return $this->hasOne('App\TransaksiStatus', 'idstatus', 'status');
     }

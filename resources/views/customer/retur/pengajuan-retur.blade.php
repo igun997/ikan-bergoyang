@@ -51,6 +51,7 @@
                                         </div>
                                         <input type="hidden" name="transaksi_id" class="transaksi_id" value="{{ $transaksi->id }}">
                                         <input type="hidden" name="status" class="status" value="{{ 8 }}">
+                                        <input type="hidden" name="user_id" class="user_id" value="{{ $transaksi->user_id }}">
                                         <div class="form-group row">
                                             <div class="col-12">
                                                 <label for="bukti_barang">Upload Gambar Barang</label>

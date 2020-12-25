@@ -78,7 +78,7 @@
                                                 <th>Tanggal Dibuat</th>
                                                 <th>Alasan</th>
                                                 <th>Bukti Barang</th>
-                                                {{-- <th>Status</th> --}}
+                                                <th>Status</th>
                                                 @foreach($returs as $retur)
                                                     <?php if($retur->noresi != null){ ?>
                                                         <th>Nomor Resi</th>
@@ -97,12 +97,18 @@
                                                     <td>
                                                         <a target="_blank" href="{{ url('uploads/bukti-barang/') }}/{{$retur->bukti_barang}}">Lihat Bukti Barang</a>
                                                     </td>
-                                                    {{-- <td>{{ $retur->status }}</td> --}}
+                                                    <td>{{ $retur->transaksistatus->keterangan }}</td>
                                                     <?php if($retur->noresi != null){ ?>
                                                         <td>{{ $retur->noresi }}</td>
                                                     <?php } ?>
                                                     <td class="text-center">
+                                                        @if($retur->status == 8)
                                                         <a href="#" class="btn btn-danger btnDelete"><i class="fa fa-times" title="Cancel retur"></i></a>
+                                                        @elseif($retur->status == 9)
+                                                        <a target="_blank" href="{{ url('uploads/alamat/alamat.png') }}">Lihat Detail Pengiriman</a>
+                                                        @else
+                                                        No action available
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach

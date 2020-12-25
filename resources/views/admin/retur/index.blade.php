@@ -49,11 +49,13 @@
                 <?php if($retur->noresi != null){ ?>
                     <th>Nomor Resi</th>
                 <?php } ?>
+                @endforeach
                 <th class="text-center">Actions</th>
             </tr>
             </thead>
             <tbody>
                 <tr>
+                    @foreach($returs as $retur)
                     <td>{{ $loop->iteration}}</td>
                     <td>#{{ $retur->transaksi_id }}</td>
                     <td>{{ $retur->created_at }}</td>
@@ -61,13 +63,17 @@
                     <td>
                         <a target="_blank" href="{{ url('uploads/bukti-barang/') }}/{{$retur->bukti_barang}}">Lihat Bukti Barang</a>
                     </td>
-                    <td>{{ $retur->status }}</td>
+                    <td>{{ $retur->transaksistatus->keterangan }}</td>
                     <?php if($retur->noresi != null){ ?>
                         <td>{{ $retur->noresi }}</td>
                     <?php } ?>
                     <td class="text-center">
-                        <a href="{{ url('/admin/retur/'.$retur->id) }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                        {{-- <a href="#" class="btn btn-danger btnDelete" data-url="{{ url('/admin/retur/'.$retur->id) }}"><i class="fa fa-trash"></i></a> --}}
+                        @if($retur->status == 8)
+                        <a href="{{ url('admin/confirm-retur/'.$retur->id.'/'.$retur->transaksi_id) }}" class="btn btn-block btn-primary">Terima</a>
+                        <a href="{{ url('admin/reject-retur/'.$retur->id.'/'.$retur->transaksi_id) }}" class="btn btn-block btn-danger">Tolak</a>
+                        @else
+                        No action available
+                        @endif
                     </td>
                 </tr>
                 @endforeach

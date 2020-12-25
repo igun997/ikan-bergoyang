@@ -48,7 +48,8 @@ class CustomerReturController extends Controller
             'transaksi_id' => 'required',
             'reason' => 'required',
             'bukti_barang' => 'required|mimes:png,jpeg,jpg',
-            'status' => 'required'
+            'status' => 'required',
+            'user_id' => 'required'
         ]);
 
         if($validate->fails()){
