@@ -38,6 +38,9 @@
                                 @elseif($transaksi->status == 4)
                                     <p style="font-weight:bold">No. Resi : {{$transaksi->noresi}}</p>
                                     <a href="{{url('/confirm-accept/')}}/{{$transaksi->id}}" class="btn btn-primary">Konfirmasi Penerimaan Barang</a>
+                                @elseif($transaksi->status && @$retur->status == 4)
+                                    <p style="font-weight:bold">No. Resi : {{$transaksi->noresi}}</p>
+                                    <a href="{{url('/confirm-accept-retur/')}}/{{$transaksi->id}}/{{$retur->id}}" class="btn btn-primary">Konfirmasi Penerimaan Barang</a>
                                 @elseif($transaksi->status == 5 && @$retur->status != 8)
                                     <a href="{{url('/retur/')}}/{{$transaksi->id}}" class="btn btn-primary">Retur Barang</a>
                                 @endif

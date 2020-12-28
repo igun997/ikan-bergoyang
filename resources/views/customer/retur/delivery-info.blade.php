@@ -7,34 +7,34 @@
                 <div class="row">
                     <div id="checkout" class="col">
                         <div class="box">
-                                <h1>Payment Information</h1>
+                                <h1>Delivery Information</h1>
                                 @include('message')
                                 <div class="content py-3">
                                     <div class="row">
                                         <div class="col-md-12 text-center">
-                                            {{-- <h4>Pembayaran sebesar</h4>
-                                            <h3>@rupiah($retur->total_harga)</h3> --}}
+                                            <h4>Kirim barang ke alamat</h4>
+                                            <h3></h3>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="box payment-method text-center" style="height:200px">
-                                                {{-- <img src="{{ asset('customer/img/bni.png') }}" alt="payment" style="object-fit: contain">
-                                                <p>No. Rek : 34351 22312 3431 (A.n. Konfeksi J&S)</p> --}}
+                                        <div class="col-md-3">
+                                            {{-- <div class="box payment-method text-center" style="height:200px">
+                                                <img src="{{ asset('customer/img/bni.png') }}" alt="payment" style="object-fit: contain">
+                                                <p>No. Rek : 34351 22312 3431 (A.n. Konfeksi J&S)</p>
+                                            </div> --}}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="box payment-method text-center" style="height:400px">
+                                                <img src="{{ asset('customer/img/alamat.png') }}" alt="payment" style="object-fit: contain">
+                                                <p>Jl. Otista, Subang, Jawa Barat. Kodepos 40528</p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="box payment-method text-center" style="height:200px">
-                                                {{-- <img src="{{ asset('customer/img/ovo.png') }}" alt="payment" style="object-fit: contain">
-                                                <p>No. Rek : 34351 22312 3431 (A.n. Konfeksi J&S)</p> --}}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="box payment-method text-center" style="height:200px">
-                                                {{-- <img src="{{ asset('customer/img/cimb.png') }}" alt="payment" style="object-fit: contain">
-                                                <p>No. Rek : 1273812 31638 72 (A.n. Konfeksi J&S)</p> --}}
-                                            </div>
+                                            {{-- <div class="box payment-method text-center" style="height:200px">
+                                                <img src="{{ asset('customer/img/cimb.png') }}" alt="payment" style="object-fit: contain">
+                                                <p>No. Rek : 1273812 31638 72 (A.n. Konfeksi J&S)</p>
+                                            </div> --}}
                                         </div>
                                         <div class="col-md-12 text-center">
-                                            {{-- <p style="color:gray">Segera lakukan pembayaran sebelum <b style="font-weight: bold;color:black">{{ $retur->kadaluarsabayar }}</b>, agar pembelian anda dapat langsung diproses.</p> --}}
+                                            <p style="color:gray">Anda dapat melakukan upload nomor resi pada box dibawah agar retur dapat diproses.</p>
                                         </div>
                                     </div>
                                     <hr>

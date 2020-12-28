@@ -36,4 +36,13 @@ class OrderController extends Controller
 
 		return redirect()->back()->with(['info' => 'Barang telah diterima!']);
     }
+
+    public function acceptWithRetur($transaksi_id, $retur_id){
+    	$transaksi = Transaksi::where('id', $transaksi_id);
+    	$update = $transaksi->update(['status' => 5]);
+    	$retur = Retur::where('id', $retur_id);
+    	$update_r = $retur->update(['status' => 5]);
+
+		return redirect()->back()->with(['info' => 'Barang telah diterima!']);
+    }
 }

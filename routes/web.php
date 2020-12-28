@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth'], function(){
         // Route::get('/upload', 'Customer\UploadController@upload');
         // Route::post('/upload/proses', 'Customer\UploadController@proses_upload');
         Route::get('/confirm-accept/{id}', 'Customer\OrderController@accept');
+        Route::get('/confirm-accept-retur/{idTransaksi}/{idRetur}', 'Customer\OrderController@acceptWithRetur');
 
         Route::get('/get-kota/{idprovinsi}', 'Customer\CheckoutController@getKota');
 
