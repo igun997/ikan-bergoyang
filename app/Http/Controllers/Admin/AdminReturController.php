@@ -116,4 +116,17 @@ class AdminReturController extends Controller
             return redirect()->back()->with(['info' => 'Retur ditolak']);
         }
     }
+
+    public function prosesRetur($idRetur, $idTransaksi){
+        $retur = Retur::where('id', $idRetur)->update(['status' => 12]);
+        $transaksi = Transaksi::where('id', $idTransaksi)->update(['status' => 12]);
+        if($transaksi && $retur){
+            $details = [
+                'title' => 'Email dari J&S Collection',
+                'body' => 'Permintaan retur anda sedang di proses dan barang akan segera dikirimkan.',
+            ];
+            Mail::to('muhammadagungabdillah133@gmail.com')->send(new Tesemeil($details));
+            return redirect()->back()->with(['info' => 'Retur diproses']);
+        }
+    }
 }

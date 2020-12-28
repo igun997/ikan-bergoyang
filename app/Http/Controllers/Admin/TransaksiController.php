@@ -7,6 +7,7 @@ use App\Kategori;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Mail\Tesemeil;
+use App\Retur;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -57,6 +58,7 @@ class TransaksiController extends Controller
     {
         $data['title'] = 'Daftar Transaksi yang belum diproses pengirimannya';
         $data['transaksis'] = Transaksi::whereIn('status', [3])->orderBy('created_at', 'desc')->get();
+        $data['returs'] = Retur::whereIn('status', [12])->orderBy('created_at', 'desc')->get();
         return view('admin.transaksi.pengiriman', $data);
     }
 
@@ -67,6 +69,23 @@ class TransaksiController extends Controller
             'noresi' => $input['resi']
         ]);
         return redirect()->back()->with(['info' => 'No Resi berhasil dikirimkan']);
+    }
+
+    public function saveResiRetur(Request $request){
+        $input = $request->all();
+        $transaksi = Transaksi::where('id', $input['transaksi_id'])->update([
+            'status' => 4,
+            'noresi' => $input['noresi']
+        ]);
+        $retur = Retur::where('id', $input['id'])->update([
+            'status' => 4,
+            'noresi' => $input['noresi']
+        ]);
+        if($transaksi && $retur) {
+            return redirect()->back()->with(['info' => 'No Resi berhasil dikirimkan']);
+        } else {
+            return redirect()->back()->with(['error' => 'No Resi gagal dikirimkan'])->withInput($input);
+        }
     }
 
     public function show($id)

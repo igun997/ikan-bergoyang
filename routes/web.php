@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/reject-pembayaran/{id}', 'Admin\TransaksiController@rejectPayment');
         Route::get('/pengiriman', 'Admin\TransaksiController@listPengirimanResi');
         Route::post('/pengiriman', 'Admin\TransaksiController@saveResi');
+        Route::post('/retur-pengiriman', 'Admin\TransaksiController@saveResiRetur');
         Route::resource('/barang', 'Admin\BarangController');
         Route::resource('/kategori', 'Admin\KategoriController');
         Route::resource('/user', 'Admin\UserController');
@@ -52,6 +53,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::resource('retur', 'Admin\AdminReturController');
         Route::get('/confirm-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@confirmRetur');
         Route::get('/reject-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@rejectRetur');
+        Route::get('/proses-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@prosesRetur');
     });
     Route::group(['middleware' => 'can:isCustomer'], function(){
         Route::post('/cart/checkout', 'Customer\CartController@checkout');
@@ -75,6 +77,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('profil/update', 'Customer\ProfilController@update');
         
         Route::resource('retur', 'Customer\CustomerReturController');
+        Route::resource('delivery-info', 'Customer\DeliveryInfoCustomer');
     });
 });
 

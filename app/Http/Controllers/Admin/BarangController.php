@@ -101,7 +101,7 @@ class BarangController extends Controller
             $input['kategori_id'] = implode(',', $input['kategori_id']);
 
             $query = $barang->update($input);
-            if ($query) {
+            if($query) {
                 return redirect()->back()->with('info', 'Data barang berhasil diubah.');
             } else {
                 return redirect()->back()->with('error', 'Data barang gagal diubah.')->withInput($input);
