@@ -110,7 +110,7 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
-                                            <form action="{{ url('retur/'.$retur->transaksi_id) }}" method="post" id="formDelete" class="d-none">
+                                            <form action="{{ url('retur/'.$retur->id) }}" method="post" id="formDelete" class="d-none">
                                                 @csrf
                                                 @method('delete')
                                             </form>

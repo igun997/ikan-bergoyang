@@ -117,8 +117,9 @@ class CustomerReturController extends Controller
      */
     public function destroy($id)
     {
-        $cancel = Retur::where('transaksi_id',$id);
-        $stat = Transaksi::where('id', $id)->update(['status' => 5]);
+        $cancel = Retur::where('id', $id);
+        $transaksi = Retur::where('id', $id)->get('transaksi_id')->first();
+        $stat = Transaksi::where('id', $transaksi->transaksi_id)->update(['status' => 5]);
         $query = $cancel->delete();
         if ($query && $stat) {
             return redirect()->back()->with('info', 'Data retur berhasil dihapus.');
