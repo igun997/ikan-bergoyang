@@ -28,13 +28,10 @@
 @endsection
 
 @section('content')
-<h2 class="content-heading">Transaksi Pembelian</h2>
+<h2 class="content-heading">Retur Pembelian</h2>
 
 <!-- Dynamic Table Full -->
 <div class="block">
-    <div class="block-header block-header-default">
-        <a href="{{ url('admin/pembelian/create') }}" class="btn btn-success btn-sm mb-25"><i class="fa fa-plus"></i> Tambah Pesanan Pembelian</a>
-    </div>
     <div class="block-content block-content-full">
         @include('message')
 
@@ -54,20 +51,18 @@
             </thead>
             <tbody>
             @foreach($transaksis as $transaksi)
-                @if($transaksi->status != 'Retur barang')
-                    <tr>
-                        <td>{{ $loop->iteration}}</td>
-                        <td>#{{ $transaksi->idpembelian }}</td>
-                        <td>{{ $transaksi->supplier->nama }}</td>
-                        <td>{{ $transaksi->created_at }}</td>
-                        <td>{{ $transaksi->totalharga }}</td>
-                        <td>{{ $transaksi->keterangan }}</td>
-                        <td>{{ $transaksi->status }}</td>
-                        <td class="text-center">
-                            <a href="{{ url('/admin/pembelian/'.$transaksi->idpembelian) }}" class="btn btn-primary"><i class="fa fa-eye"></i>Detail Pembelian</a>
-                        </td>
-                    </tr>
-                @endif
+                <tr>
+                    <td>{{ $loop->iteration}}</td>
+                    <td>#{{ $transaksi->idpembelian }}</td>
+                    <td>{{ $transaksi->supplier->nama }}</td>
+                    <td>{{ $transaksi->created_at }}</td>
+                    <td>{{ $transaksi->totalharga }}</td>
+                    <td>{{ $transaksi->keterangan }}</td>
+                    <td>{{ $transaksi->status }}</td>
+                    <td class="text-center">
+                        <a href="{{ url('/admin/retur-pembelian/'.$transaksi->idpembelian) }}" class="btn btn-primary"><i class="fa fa-eye"></i>Detail Retur</a>
+                    </td>
+                </tr>
             @endforeach
             </tbody>
         </table>

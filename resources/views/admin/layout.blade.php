@@ -144,6 +144,7 @@ MAIN CONTENT LAYOUT
                         <hr>
                         <li><a href="{{ url('/admin/permintaan') }}" class="{{ request()->is('admin/permintaan*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Permintaan Pembelian</span></a></li>
                         <li><a href="{{ url('/admin/pembelian') }}" class="{{ request()->is('admin/pembelian*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Pesanan Pembelian</span></a></li>
+                        <li><a href="{{ url('/admin/retur-pembelian') }}" class="{{ request()->is('admin/retur-pembelian*') ? 'active' : '' }}"><i class="si si-loop"></i> <span class="sidebar-mini-hide">Retur Pembelian</span></a></li>
                         <hr>
                         <li><a href="{{ url('/admin/transaksi') }}" class="{{ request()->is('admin/transaksi*') ? 'active' : '' }}"><i class="si si-logout"></i> <span class="sidebar-mini-hide">Transaksi Penjualan</span></a></li>
                         <li><a href="{{ url('/admin/pembayaran') }}" class="{{ request()->is('admin/pembayaran') ? 'active' : '' }}"><i class="si si-drawer"></i> <span class="sidebar-mini-hide">Konfirmasi Bayar</span></a></li>

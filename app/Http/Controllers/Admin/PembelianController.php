@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Kategori;
 use App\Pembelian;
 use App\Penerimaan;
+use App\Permintaan;
 use App\Supplier;
 use App\Transaksi;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -37,11 +38,11 @@ class PembelianController extends Controller
         $data['transaksis'] = Pembelian::orderBy('created_at', 'desc')->get();
         foreach($data['transaksis'] as $t){
             $isdeliver = Penerimaan::where('idpembelian', $t->id)->first();
-            if($isdeliver){
-                $t->status = "Barang sudah diterima";
-            }else{
-                $t->status = "Proses Pemesanan ke Supplier";
-            }
+            // if($isdeliver){
+            //     $t->status = "Barang sudah diterima";
+            // }else{
+            //     $t->status = "Proses Pemesanan ke Supplier";
+            // }
         }
         return view('admin.pembelian.index', $data);
     }
@@ -95,11 +96,11 @@ class PembelianController extends Controller
         $data['suppliers'] = Supplier::all();
         $data['pembelian'] = Pembelian::where('idpembelian', $id)->first();
         $isdeliver = Penerimaan::where('idpembelian', $id)->first();
-        if($isdeliver){
-            $data['pembelian']['status'] = "Barang sudah diterima";
-        }else{
-            $data['pembelian']['status'] = "Proses Pemesanan ke Supplier";
-        }
+        // if($isdeliver){
+        //     $data['pembelian']['status'] = "Barang sudah diterima";
+        // }else{
+        //     $data['pembelian']['status'] = "Proses Pemesanan ke Supplier";
+        // }
 
         // $data['temp'] = DetailPembelian::where('idpembelian', $data['nostruk'])->get();
         return view('admin.pembelian.form', $data);
@@ -158,6 +159,9 @@ class PembelianController extends Controller
             $stok = Barang::where('id', $b->idbarang)->first()->stok;
             Barang::where('id', $b->idbarang)->update([
                 'stok' => $stok + $b->qty
+            ]);
+            Pembelian::where('idpembelian', $id)->update([
+                'status' => 'Barang sudah diterima'
             ]);
         }
 

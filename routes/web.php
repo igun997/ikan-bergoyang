@@ -54,6 +54,9 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/confirm-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@confirmRetur');
         Route::get('/reject-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@rejectRetur');
         Route::get('/proses-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@prosesRetur');
+
+        Route::resource('/retur-pembelian', 'Admin\ReturPembelianController');
+        Route::get('/proses-retur/{id}', 'Admin\ReturPembelianController@prosesRetur');
     });
     Route::group(['middleware' => 'can:isCustomer'], function(){
         Route::post('/cart/checkout', 'Customer\CartController@checkout');

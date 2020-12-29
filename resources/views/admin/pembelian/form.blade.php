@@ -98,10 +98,18 @@
                 </div>
             </div>
             @else
-                @if($pembelian->status != 'Barang sudah diterima')
+                @if($pembelian->status != 'Barang sudah diterima' && $pembelian->status != 'Retur barang')
                     <div class="form-group row">
                         <div class="col-md-12 text-right">
                             <button type="button" class="btn btn-primary btnTerima">Konfirmasi Penerimaan Barang</button>
+                        </div>
+                    </div>
+                    @endif
+                @if($pembelian->status == 'Barang sudah diterima')
+                    <div class="form-group row">
+                        <div class="col-md-12 text-right">
+                            {{-- <button type="button" class="btn btn-danger btnRetur">Retur Barang</button> --}}
+                            <a href="{{ url('admin/proses-retur/'.$pembelian->idpembelian) }}" class="btn btn-danger">Retur Barang</a>
                         </div>
                     </div>
                 @endif
@@ -208,5 +216,29 @@
                 type: 'GET'
             });
         }
+
+        // $('.btnRetur').on('click', function(e){
+        //     e.preventDefault();
+        //     var idpembelian = $('#idpembelian').val();
+        //     returBarang(idpembelian);
+        // });
+
+        // function returBarang(id) {
+        //     var r = confirm("Klik ok untuk lanjutkan proses retur!");
+        //     if(r == true) {
+
+        //     }
+        // }
+
+        // function returBarang(id){
+        //     $.ajax({
+        //         url: "{{url('admin/retur-pembelian')}}/"+id,
+        //         success: function(res) {
+        //             location.reload();
+        //         },
+        //         type: 'GET'
+        //     });
+        // }
+
     </script>
 @endsection

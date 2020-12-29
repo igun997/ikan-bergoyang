@@ -8,7 +8,7 @@ class Pembelian extends Model
 {
     protected $table = 'pembelian';
     protected $fillable = [
-        'idpembelian', 'idpermintaan', 'idsupplier', 'totalharga', 'keterangan'
+        'idpembelian', 'idpermintaan', 'idsupplier', 'totalharga', 'keterangan', 'status'
     ];
 
     public function supplier(){
