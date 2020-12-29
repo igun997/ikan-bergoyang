@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Barang;
+use App\DetailPermintaan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Pembelian;
@@ -89,9 +91,12 @@ class ReturPembelianController extends Controller
     public function prosesRetur($id)
     {
         $pembelian = Pembelian::where('idpembelian', $id)->get()->first();
-        if($pembelian) {
+        $detail = DetailPermintaan::where('id', $pembelian->idpermintaan)->get()->first();
+        $barang = Barang::where('id', $detail->idbarang)->get()->first();
+        $qty = $barang->stok - $detail->qty;
+        $update = Barang::where('id', $detail->idbarang)->update(['stok' => $qty]);
+        if($pembelian && $update) {
             $stat = Pembelian::where('idpembelian', $pembelian->idpembelian)->update(['status' => 'Retur barang']);
-            $stock = Pembelian::where('idpembelian', $pembelian->idpembelian)->update(['status' => 'Retur barang']);
             if ($stat) {
                 return redirect()->to('admin/retur-pembelian')->with('info', 'Proses retur berhasil');
             } else {
