@@ -217,28 +217,5 @@
             });
         }
 
-        // $('.btnRetur').on('click', function(e){
-        //     e.preventDefault();
-        //     var idpembelian = $('#idpembelian').val();
-        //     returBarang(idpembelian);
-        // });
-
-        // function returBarang(id) {
-        //     var r = confirm("Klik ok untuk lanjutkan proses retur!");
-        //     if(r == true) {
-
-        //     }
-        // }
-
-        // function returBarang(id){
-        //     $.ajax({
-        //         url: "{{url('admin/retur-pembelian')}}/"+id,
-        //         success: function(res) {
-        //             location.reload();
-        //         },
-        //         type: 'GET'
-        //     });
-        // }
-
     </script>
 @endsection
