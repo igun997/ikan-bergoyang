@@ -50,7 +50,7 @@ class ReturPembelianController extends Controller
      */
     public function show($id)
     {
-        $data['retur'] = Pembelian::where('idpembelian', $id)->get()->first();
+        $data['retur'] = Pembelian::where('idpembelian', $id)->first();
         return view('admin.retur.show', $data);
     }
 
@@ -90,9 +90,9 @@ class ReturPembelianController extends Controller
 
     public function prosesRetur($id)
     {
-        $pembelian = Pembelian::where('idpembelian', $id)->get()->first();
-        $detail = DetailPermintaan::where('id', $pembelian->idpermintaan)->get()->first();
-        $barang = Barang::where('id', $detail->idbarang)->get()->first();
+        $pembelian = Pembelian::where('idpembelian', $id)->first();
+        $detail = DetailPermintaan::where('id', $pembelian->idpermintaan)->first();
+        $barang = Barang::where('id', $detail->idbarang)->first();
         $qty = $barang->stok - $detail->qty;
         $update = Barang::where('id', $detail->idbarang)->update(['stok' => $qty]);
         if($pembelian && $update) {
