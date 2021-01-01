@@ -28,16 +28,12 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/', function(){
             return redirect('admin/transaksi');
         });
-        Route::resource('/transaksi', 'Admin\TransaksiController');
-        Route::get('/pembayaran', 'Admin\TransaksiController@listKonfirmasiPembayaran');
-        Route::get('/confirm-pembayaran/{id}', 'Admin\TransaksiController@confirmPayment');
-        Route::get('/reject-pembayaran/{id}', 'Admin\TransaksiController@rejectPayment');
-        Route::get('/pengiriman', 'Admin\TransaksiController@listPengirimanResi');
-        Route::post('/pengiriman', 'Admin\TransaksiController@saveResi');
-        Route::post('/retur-pengiriman', 'Admin\TransaksiController@saveResiRetur');
+        //pemilik
+        Route::resource('/user', 'Admin\UserController');
+
+        //gudang
         Route::resource('/barang', 'Admin\BarangController');
         Route::resource('/kategori', 'Admin\KategoriController');
-        Route::resource('/user', 'Admin\UserController');
         Route::resource('/supplier', 'Admin\SupplierController');
         Route::resource('/daftarpemesanan', 'Admin\DaftarPemesananController');
 
@@ -49,14 +45,23 @@ Route::group(['middleware' => 'auth'], function(){
         Route::resource('/pembelian', 'Admin\PembelianController');
         Route::get('/penerimaan/{id}', 'Admin\PembelianController@terimaBarang');
         Route::get('/pembelian/{id}/print', 'Admin\PembelianController@printFaktur');
-        
+
+        Route::resource('/retur-pembelian', 'Admin\ReturPembelianController');
+        Route::get('/proses-retur/{id}', 'Admin\ReturPembelianController@prosesRetur');
+
+        //penjualan
+        Route::resource('/transaksi', 'Admin\TransaksiController');
+        Route::get('/pembayaran', 'Admin\TransaksiController@listKonfirmasiPembayaran');
+        Route::get('/confirm-pembayaran/{id}', 'Admin\TransaksiController@confirmPayment');
+        Route::get('/reject-pembayaran/{id}', 'Admin\TransaksiController@rejectPayment');
+        Route::get('/pengiriman', 'Admin\TransaksiController@listPengirimanResi');
+        Route::post('/pengiriman', 'Admin\TransaksiController@saveResi');
+        Route::post('/retur-pengiriman', 'Admin\TransaksiController@saveResiRetur');
+
         Route::resource('retur', 'Admin\AdminReturController');
         Route::get('/confirm-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@confirmRetur');
         Route::get('/reject-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@rejectRetur');
         Route::get('/proses-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@prosesRetur');
-
-        Route::resource('/retur-pembelian', 'Admin\ReturPembelianController');
-        Route::get('/proses-retur/{id}', 'Admin\ReturPembelianController@prosesRetur');
     });
     Route::group(['middleware' => 'can:isCustomer'], function(){
         Route::post('/cart/checkout', 'Customer\CartController@checkout');

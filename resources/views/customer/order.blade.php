@@ -103,7 +103,7 @@
                                                         @if($retur->status == 8)
                                                         <a href="#" class="btn btn-danger btnDelete"><i class="fa fa-times" title="Cancel retur"></i></a>
                                                         @elseif($retur->status == 9)
-                                                        <a href="{{ url('delivery-info') }}/{{ $retur->id }}">Lihat Detail Pengiriman</a>
+                                                        <a href="{{ url('delivery-info') }}/{{ $retur->id }}" class="btn btn-warning">Lanjutkan Proses Retur</a>
                                                         @else
                                                         No action available
                                                         @endif

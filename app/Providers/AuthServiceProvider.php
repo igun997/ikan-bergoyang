@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use phpDocumentor\Reflection\PseudoTypes\True_;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -32,7 +33,9 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         $gate->define('isAdmin', function($user) {
-            return $user->level == 1;
+            if($user->level == 1 || $user->level == 3 || $user->level == 4) {
+                return true;
+            }
         });
     }
 }

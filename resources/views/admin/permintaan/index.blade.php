@@ -47,6 +47,7 @@
                 <th>Pembuat</th>
                 <th>Tanggal Dibuat</th>
                 <th>Total Barang</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>

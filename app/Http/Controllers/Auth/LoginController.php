@@ -53,6 +53,12 @@ class LoginController extends Controller
         }elseif($user && $user->level == 2){
             auth()->loginUsingId($user->id);
             return redirect()->intended('/');
+        }elseif($user && $user->level == 3){
+            auth()->loginUsingId($user->id);
+            return redirect()->intended('/admin/barang');
+        }elseif($user && $user->level == 4){
+            auth()->loginUsingId($user->id);
+            return redirect()->intended('/admin');
         }else{
             return redirect()->back()->with('error', 'Email / Password salah!')->withInput($input);
         }

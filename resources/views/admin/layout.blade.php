@@ -123,11 +123,25 @@ MAIN CONTENT LAYOUT
                         <!-- END Close Sidebar -->
 
                         <!-- Logo -->
-                        <div class="content-header-item">
-                            <a class="link-effect font-w700" href="{{ url('produk') }}">
-                                <span class="font-size-xl text-dual-primary-dark">J</span><span class="font-size-xl text-primary">&S</span>
-                            </a>
-                        </div>
+                        @if(auth()->user()->level == 1)
+                            <div class="content-header-item">
+                                <a class="link-effect font-w700" href="{{ url('produk') }}">
+                                    <span class="font-size-xl text-dual-primary-dark">J</span><span class="font-size-xl text-primary">&S</span>
+                                </a>
+                            </div>
+                        @elseif(auth()->user()->level == 3)
+                            <div class="content-header-item">
+                                <a class="link-effect font-w700" href="{{ url('/admin/pembelian') }}">
+                                    <span class="font-size-xl text-dual-primary-dark">J</span><span class="font-size-xl text-primary">&S</span>
+                                </a>
+                            </div>
+                        @else
+                            <div class="content-header-item">
+                                <a class="link-effect font-w700" href="{{ url('/admin') }}">
+                                    <span class="font-size-xl text-dual-primary-dark">J</span><span class="font-size-xl text-primary">&S</span>
+                                </a>
+                            </div>
+                        @endif
                         <!-- END Logo -->
                     </div>
                     <!-- END Normal Mode -->
@@ -137,19 +151,34 @@ MAIN CONTENT LAYOUT
                 <!-- Side Navigation -->
                 <div class="content-side content-side-full">
                     <ul class="nav-main">
-                        <li><a href="{{ url('/admin/barang') }}" class="{{ request()->is('admin/barang*') ? 'active' : '' }}"><i class="si si-bag"></i> <span class="sidebar-mini-hide">Data Produk</span></a></li>
-                        <li><a href="{{ url('/admin/kategori') }}" class="{{ request()->is('admin/kategori*') ? 'active' : '' }}"><i class="si si-menu"></i> <span class="sidebar-mini-hide">Data Kategori</span></a></li>
-                        <li><a href="{{ url('/admin/user') }}" class="{{ request()->is('admin/user*') ? 'active' : '' }}"><i class="si si-users"></i> <span class="sidebar-mini-hide">Data User</span></a></li>
-                        <li><a href="{{ url('/admin/supplier') }}" class="{{ request()->is('admin/supplier*') ? 'active' : '' }}"><i class="si si-social-dropbox"></i> <span class="sidebar-mini-hide">Data Supplier</span></a></li>
-                        <hr>
-                        <li><a href="{{ url('/admin/permintaan') }}" class="{{ request()->is('admin/permintaan*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Permintaan Pembelian</span></a></li>
-                        <li><a href="{{ url('/admin/pembelian') }}" class="{{ request()->is('admin/pembelian*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Pesanan Pembelian</span></a></li>
-                        <li><a href="{{ url('/admin/retur-pembelian') }}" class="{{ request()->is('admin/retur-pembelian*') ? 'active' : '' }}"><i class="si si-loop"></i> <span class="sidebar-mini-hide">Retur Pembelian</span></a></li>
-                        <hr>
-                        <li><a href="{{ url('/admin/transaksi') }}" class="{{ request()->is('admin/transaksi*') ? 'active' : '' }}"><i class="si si-logout"></i> <span class="sidebar-mini-hide">Transaksi Penjualan</span></a></li>
-                        <li><a href="{{ url('/admin/pembayaran') }}" class="{{ request()->is('admin/pembayaran') ? 'active' : '' }}"><i class="si si-drawer"></i> <span class="sidebar-mini-hide">Konfirmasi Bayar</span></a></li>
-                        <li><a href="{{ url('/admin/pengiriman') }}" class="{{ request()->is('admin/pengiriman') ? 'active' : '' }}"><i class="si si-note"></i> <span class="sidebar-mini-hide">Kirim Resi</span></a></li>
-                        <li><a href="{{ url('/admin/retur') }}" class="{{ request()->is('admin/retur') ? 'active' : '' }}"><i class="si si-docs"></i> <span class="sidebar-mini-hide">Retur Barang</span></a></li>
+                        @if(auth()->user()->level == 1)
+                            <li><a href="{{ url('/admin/barang') }}" class="{{ request()->is('admin/barang*') ? 'active' : '' }}"><i class="si si-bag"></i> <span class="sidebar-mini-hide">Data Produk</span></a></li>
+                            <li><a href="{{ url('/admin/kategori') }}" class="{{ request()->is('admin/kategori*') ? 'active' : '' }}"><i class="si si-menu"></i> <span class="sidebar-mini-hide">Data Kategori</span></a></li>
+                            <li><a href="{{ url('/admin/user') }}" class="{{ request()->is('admin/user*') ? 'active' : '' }}"><i class="si si-users"></i> <span class="sidebar-mini-hide">Data User</span></a></li>
+                            <li><a href="{{ url('/admin/supplier') }}" class="{{ request()->is('admin/supplier*') ? 'active' : '' }}"><i class="si si-social-dropbox"></i> <span class="sidebar-mini-hide">Data Supplier</span></a></li>
+                            <hr>
+                            <li><a href="{{ url('/admin/permintaan') }}" class="{{ request()->is('admin/permintaan*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Permintaan Pembelian</span></a></li>
+                            <li><a href="{{ url('/admin/pembelian') }}" class="{{ request()->is('admin/pembelian*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Pesanan Pembelian</span></a></li>
+                            <li><a href="{{ url('/admin/retur-pembelian') }}" class="{{ request()->is('admin/retur-pembelian*') ? 'active' : '' }}"><i class="si si-loop"></i> <span class="sidebar-mini-hide">Retur Pembelian</span></a></li>
+                            <hr>
+                            <li><a href="{{ url('/admin/transaksi') }}" class="{{ request()->is('admin/transaksi*') ? 'active' : '' }}"><i class="si si-logout"></i> <span class="sidebar-mini-hide">Transaksi Penjualan</span></a></li>
+                            <li><a href="{{ url('/admin/pembayaran') }}" class="{{ request()->is('admin/pembayaran') ? 'active' : '' }}"><i class="si si-drawer"></i> <span class="sidebar-mini-hide">Konfirmasi Bayar</span></a></li>
+                            <li><a href="{{ url('/admin/pengiriman') }}" class="{{ request()->is('admin/pengiriman') ? 'active' : '' }}"><i class="si si-note"></i> <span class="sidebar-mini-hide">Kirim Resi</span></a></li>
+                            <li><a href="{{ url('/admin/retur') }}" class="{{ request()->is('admin/retur') ? 'active' : '' }}"><i class="si si-docs"></i> <span class="sidebar-mini-hide">Retur Barang</span></a></li>
+                        @elseif(auth()->user()->level == 3)
+                            <li><a href="{{ url('/admin/barang') }}" class="{{ request()->is('admin/barang*') ? 'active' : '' }}"><i class="si si-bag"></i> <span class="sidebar-mini-hide">Data Produk</span></a></li>
+                            <li><a href="{{ url('/admin/kategori') }}" class="{{ request()->is('admin/kategori*') ? 'active' : '' }}"><i class="si si-menu"></i> <span class="sidebar-mini-hide">Data Kategori</span></a></li>
+                            <li><a href="{{ url('/admin/supplier') }}" class="{{ request()->is('admin/supplier*') ? 'active' : '' }}"><i class="si si-social-dropbox"></i> <span class="sidebar-mini-hide">Data Supplier</span></a></li>
+                            <hr>
+                            <li><a href="{{ url('/admin/permintaan') }}" class="{{ request()->is('admin/permintaan*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Permintaan Pembelian</span></a></li>
+                            <li><a href="{{ url('/admin/pembelian') }}" class="{{ request()->is('admin/pembelian*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Pesanan Pembelian</span></a></li>
+                            <li><a href="{{ url('/admin/retur-pembelian') }}" class="{{ request()->is('admin/retur-pembelian*') ? 'active' : '' }}"><i class="si si-loop"></i> <span class="sidebar-mini-hide">Retur Pembelian</span></a></li>
+                        @else
+                            <li><a href="{{ url('/admin/transaksi') }}" class="{{ request()->is('admin/transaksi*') ? 'active' : '' }}"><i class="si si-logout"></i> <span class="sidebar-mini-hide">Transaksi Penjualan</span></a></li>
+                            <li><a href="{{ url('/admin/pembayaran') }}" class="{{ request()->is('admin/pembayaran') ? 'active' : '' }}"><i class="si si-drawer"></i> <span class="sidebar-mini-hide">Konfirmasi Bayar</span></a></li>
+                            <li><a href="{{ url('/admin/pengiriman') }}" class="{{ request()->is('admin/pengiriman') ? 'active' : '' }}"><i class="si si-note"></i> <span class="sidebar-mini-hide">Kirim Resi</span></a></li>
+                            <li><a href="{{ url('/admin/retur') }}" class="{{ request()->is('admin/retur') ? 'active' : '' }}"><i class="si si-docs"></i> <span class="sidebar-mini-hide">Retur Barang</span></a></li>
+                        @endif
                     </ul>
                 </div>
             </div>

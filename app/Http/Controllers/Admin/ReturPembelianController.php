@@ -7,6 +7,7 @@ use App\DetailPermintaan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Pembelian;
+use Dotenv\Validator;
 
 class ReturPembelianController extends Controller
 {
@@ -91,21 +92,29 @@ class ReturPembelianController extends Controller
     public function prosesRetur($id)
     {
         $pembelian = Pembelian::where('idpembelian', $id)->first();
-        $detail = DetailPermintaan::where('id', $pembelian->idpermintaan)->first();
-        $barang = Barang::where('id', $detail->idbarang)->first();
-        $qty = $barang->stok - $detail->qty;
-        $update = Barang::where('id', $detail->idbarang)->update(['stok' => $qty]);
-        if($pembelian && $update) {
-            $stat = Pembelian::where('idpembelian', $pembelian->idpembelian)->update(['status' => 'Retur barang']);
-            if ($stat) {
-                return redirect()->to('admin/retur-pembelian')->with('info', 'Proses retur berhasil');
+        if($pembelian->idpermintaan) {
+            $detail = DetailPermintaan::where('id', $pembelian->idpermintaan)->first();
+            if($detail->idbarang) {
+                $barang = Barang::where('id', $detail->idbarang)->first();
+                $qty = $barang->stok - $detail->qty;
+                $update = Barang::where('id', $detail->idbarang)->update(['stok' => $qty]);
+                if($pembelian && $update) {
+                    $stat = Pembelian::where('idpembelian', $pembelian->idpembelian)->update(['status' => 'Retur barang']);
+                    if ($stat) {
+                        return redirect()->to('admin/retur-pembelian')->with('info', 'Proses retur berhasil');
+                    } else {
+                        return redirect()->to('admin/pembelian')->with('error', 'Proses retur gagal');
+                    }
+                } else {
+                    return redirect()->to('/pembelian')->with('error', 'Terjadi kesalahan');
+                }
+                echo($pembelian);
             } else {
                 return redirect()->to('admin/pembelian')->with('error', 'Proses retur gagal');
             }
         } else {
-            return redirect()->to('/pembelian')->with('error', 'Terjadi kesalahan');
+            return redirect()->to('admin/pembelian')->with('error', 'Proses retur gagal');
         }
-        echo($pembelian);
     }
 
 }
