@@ -47,7 +47,7 @@
                                                     <h4>Input Resi Pengiriman Barang</h4>
                                                 </div>
                                                 <div class="col-6">
-                                                    <input type="number" class="form-control" name="noresi">
+                                                    <input type="text" class="form-control" name="noresi">
                                                 </div>
                                                 <input type="hidden" class="form-control" name="id" value="{{ $retur->id }}">
                                                 <input type="hidden" class="form-control" name="transaksi_id" value="{{ $retur->transaksi_id }}">

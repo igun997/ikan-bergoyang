@@ -108,12 +108,15 @@
                 @if($pembelian->status == 'Barang sudah diterima')
                     <div class="form-group row">
                         <div class="col-md-12 text-right">
-                            {{-- <button type="button" class="btn btn-danger btnRetur">Retur Barang</button> --}}
-                            <a href="{{ url('admin/proses-retur/'.$pembelian->idpembelian) }}" class="btn btn-danger">Retur Barang</a>
+                            <a href="#" data-url="{{ url('admin/proses-retur/'.$pembelian->idpembelian) }}" class="btn btn-danger btnRetur">Retur Barang</a>
                         </div>
                     </div>
                 @endif
             @endif
+        </form>
+        <form action="#" method="post" id="formRetur" class="d-none">
+            @csrf
+            @method('get')
         </form>
     </div>
 </div>
@@ -216,6 +219,34 @@
                 type: 'GET'
             });
         }
+
+        $(document).on('click', ':not(form)[data-confirm]', function(e){
+            if(!confirm($(this).data('confirm'))){
+                e.stopImmediatePropagation();
+                e.preventDefault();
+            }
+        });
+
+        
+        $('body').on('click', '.btnRetur', function(e){
+            e.preventDefault();
+
+            var url = $(this).data('url');
+            swal({
+                    title: "Konfirmasi tindakan",
+                    text: "Apakah anda yakin ingin melakukan retur?",
+                    type: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#f33c37",
+                    showLoaderOnConfirm: true,
+                }).then(function(inputValue) {
+                    console.log(inputValue.value);
+                    if (inputValue.value===true) {
+                        $('#formRetur').attr('action', url);
+                        $('#formRetur').submit();
+                    }
+                });
+        });
 
     </script>
 @endsection

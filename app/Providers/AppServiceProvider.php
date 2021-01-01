@@ -47,8 +47,8 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton('user_level', function($app){
             return [
-                'name' => ['', 'Admin', 'Customer'],
-                'color' => ['', 'primary', 'success']
+                'name' => ['', 'Pemilik', 'Customer', 'Gudang', 'Penjualan'],
+                'color' => ['', 'primary', 'success', 'secondary', 'warning']
             ];
         });
 
