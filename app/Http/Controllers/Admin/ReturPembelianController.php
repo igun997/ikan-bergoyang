@@ -93,8 +93,8 @@ class ReturPembelianController extends Controller
     {
         $pembelian = Pembelian::where('idpembelian', $id)->first();
         if($pembelian->idpermintaan) {
-            $detail = DetailPermintaan::where('id', $pembelian->idpermintaan)->first();
-            if($detail->idbarang) {
+            $detail = DetailPermintaan::where('idpembelian', $pembelian->idpermintaan)->first();
+            if($detail) {
                 $barang = Barang::where('id', $detail->idbarang)->first();
                 $qty = $barang->stok - $detail->qty;
                 $update = Barang::where('id', $detail->idbarang)->update(['stok' => $qty]);
