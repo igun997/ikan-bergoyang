@@ -160,11 +160,13 @@ MAIN CONTENT LAYOUT
                             <li><a href="{{ url('/admin/permintaan') }}" class="{{ request()->is('admin/permintaan*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Permintaan Pembelian</span></a></li>
                             <li><a href="{{ url('/admin/pembelian') }}" class="{{ request()->is('admin/pembelian*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Pesanan Pembelian</span></a></li>
                             <li><a href="{{ url('/admin/retur-pembelian') }}" class="{{ request()->is('admin/retur-pembelian*') ? 'active' : '' }}"><i class="si si-loop"></i> <span class="sidebar-mini-hide">Retur Pembelian</span></a></li>
+                            <li><a href="{{ url('/admin/pembelian-report') }}" class="{{ request()->is('admin/pembelian-report') ? 'active' : '' }}"><i class="si si-docs"></i> <span class="sidebar-mini-hide">Laporan Pembelian</span></a></li>
                             <hr>
                             <li><a href="{{ url('/admin/transaksi') }}" class="{{ request()->is('admin/transaksi*') ? 'active' : '' }}"><i class="si si-logout"></i> <span class="sidebar-mini-hide">Transaksi Penjualan</span></a></li>
                             <li><a href="{{ url('/admin/pembayaran') }}" class="{{ request()->is('admin/pembayaran') ? 'active' : '' }}"><i class="si si-drawer"></i> <span class="sidebar-mini-hide">Konfirmasi Bayar</span></a></li>
                             <li><a href="{{ url('/admin/pengiriman') }}" class="{{ request()->is('admin/pengiriman') ? 'active' : '' }}"><i class="si si-note"></i> <span class="sidebar-mini-hide">Kirim Resi</span></a></li>
                             <li><a href="{{ url('/admin/retur') }}" class="{{ request()->is('admin/retur') ? 'active' : '' }}"><i class="si si-docs"></i> <span class="sidebar-mini-hide">Retur Barang</span></a></li>
+                            <li><a href="{{ url('/admin/transaksi-report') }}" class="{{ request()->is('admin/transaksi-report') ? 'active' : '' }}"><i class="si si-docs"></i> <span class="sidebar-mini-hide">Laporan Penjualan</span></a></li>
                         @elseif(auth()->user()->level == 3)
                             <li><a href="{{ url('/admin/barang') }}" class="{{ request()->is('admin/barang*') ? 'active' : '' }}"><i class="si si-bag"></i> <span class="sidebar-mini-hide">Data Produk</span></a></li>
                             <li><a href="{{ url('/admin/kategori') }}" class="{{ request()->is('admin/kategori*') ? 'active' : '' }}"><i class="si si-menu"></i> <span class="sidebar-mini-hide">Data Kategori</span></a></li>

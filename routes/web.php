@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::resource('/pembelian', 'Admin\PembelianController');
         Route::get('/penerimaan/{id}', 'Admin\PembelianController@terimaBarang');
         Route::get('/pembelian/{id}/print', 'Admin\PembelianController@printFaktur');
+        Route::get('/pembelian-report', 'Admin\PembelianController@report');
+        Route::get('/pembelian/report/monthly/{bulan}/{tahun}', 'Admin\PembelianController@reportMonthly');
 
         Route::resource('/retur-pembelian', 'Admin\ReturPembelianController');
         Route::get('/proses-retur/{id}', 'Admin\ReturPembelianController@prosesRetur');
@@ -57,6 +59,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/pengiriman', 'Admin\TransaksiController@listPengirimanResi');
         Route::post('/pengiriman', 'Admin\TransaksiController@saveResi');
         Route::post('/retur-pengiriman', 'Admin\TransaksiController@saveResiRetur');
+        Route::get('/transaksi-report', 'Admin\TransaksiController@report');
+        Route::get('/transaksi/report/monthly/{bulan}/{tahun}', 'Admin\TransaksiController@reportMonthly');
 
         Route::resource('retur', 'Admin\AdminReturController');
         Route::get('/confirm-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@confirmRetur');

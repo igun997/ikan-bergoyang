@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Mail\Tesemeil;
 use App\Retur;
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -125,5 +127,70 @@ class TransaksiController extends Controller
         } else {
             return redirect()->back()->with('error', 'Data transaksi gagal dihapus.');
         }
+    }
+
+    public function report(){
+        return view('admin.transaksi.report');
+    }
+
+    public function reportMonthly($bulan, $tahun){
+        setlocale(LC_TIME, 'es_ES');
+        $namabulan = $this->getNamaBulanIndo($bulan);
+        // $data = Pembelian::whereMonth('created_at', $bulan)->orderBy('created_at', 'asc')->get();
+        $query = "select a.tanggal, b.barang, b.stok, a.totalharga from (
+            select date(a.created_at) as tanggal, sum(a.total_harga) as totalharga from transaksi a 
+            inner join detail_transaksi c on a.id = c.transaksi_id
+            where month(a.created_at) = $bulan and year(a.created_at) = $tahun and status = 5 group by date(a.created_at)
+        ) a 
+        inner join (
+            select date(a.created_at) as tanggal, count(*) as barang, sum(c.qty) as stok from transaksi a 
+            inner join detail_transaksi c on a.id = c.transaksi_id 
+            where month(a.created_at) = $bulan and year(a.created_at) = $tahun and status = 5 GROUP BY date(a.created_at)
+        ) b on a.tanggal = b.tanggal";
+        $data = DB::select(DB::raw($query));
+
+        $pdf = PDF::loadview('admin.transaksi.reportmonth', ['data' => $data, 'namabulan' => $namabulan, 'tahun' => $tahun]);
+    	return $pdf->download('Report Pembelian di bulan ' . $namabulan . ' ' . $tahun);
+    }
+
+    private function getNamaBulanIndo($bulan){
+        switch ($bulan) {
+            case 1:
+                return "Januari";
+                break;
+            case 2:
+                return "Februari";
+                break;
+            case 3:
+                return "Maret";
+                break;
+            case 4:
+                return "April";
+                break;
+            case 5:
+                return "Mei";
+                break;
+            case 6:
+                return "Juni";
+                break;
+            case 7:
+                return "Juli";
+                break;
+            case 8:
+                return "Agustus";
+                break;
+            case 9:
+                return "September";
+                break;
+            case 10:
+                return "Oktober";
+                break;
+            case 11:
+                return "November";
+                break;
+            case 12:
+                return "Desember";
+                break;
+          }
     }
 }
