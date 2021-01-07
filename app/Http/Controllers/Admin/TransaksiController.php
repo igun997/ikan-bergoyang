@@ -150,7 +150,7 @@ class TransaksiController extends Controller
         $data = DB::select(DB::raw($query));
 
         $pdf = PDF::loadview('admin.transaksi.reportmonth', ['data' => $data, 'namabulan' => $namabulan, 'tahun' => $tahun]);
-    	return $pdf->download('Report Pembelian di bulan ' . $namabulan . ' ' . $tahun);
+    	return $pdf->download('Report Pembelian di bulan ' . $namabulan . ' ' . $tahun . '.pdf');
     }
 
     private function getNamaBulanIndo($bulan){
