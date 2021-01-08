@@ -6,6 +6,7 @@ use App\Barang;
 use App\Kategori;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,6 +15,7 @@ class BarangController extends Controller
     public function index()
     {
         $data['barangs'] = Barang::all();
+        $data['kategori'] = Kategori::all();
         return view('admin.produk.index', $data);
     }
 
@@ -119,5 +121,28 @@ class BarangController extends Controller
         } else {
             return redirect()->back()->with('error', 'Data barang gagal dihapus.');
         }
+    }
+
+    public function exportLaporan(){
+        $barang = new Barang();
+        if(!empty(request()->kategori)){
+            $kategori = request()->kategori;
+            $barang = $barang->where('kategori_id', $kategori);
+        }        
+        if(!empty(request()->minstok)){
+            $minstok = request()->minstok;
+            $barang = $barang->where('stok', '>=', $minstok);
+        }          
+        if(!empty(request()->maxstok)){
+            $maxstok = request()->maxstok;
+            $barang = $barang->where('stok', '<=', $maxstok);
+        }     
+
+        $data['barangs'] = $barang->get();
+
+        // return view('admin.produk.laporan', $data);
+        set_time_limit(300);
+        $pdf = PDF::loadView('admin.produk.laporan', $data);
+        return $pdf->setPaper('a4', 'portrait')->download('laporan barang.pdf');
     }
 }

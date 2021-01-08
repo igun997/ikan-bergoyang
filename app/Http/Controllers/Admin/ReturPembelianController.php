@@ -7,6 +7,7 @@ use App\DetailPermintaan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Pembelian;
+use Barryvdh\DomPDF\Facade as PDF;
 use Dotenv\Validator;
 
 class ReturPembelianController extends Controller
@@ -115,6 +116,25 @@ class ReturPembelianController extends Controller
         } else {
             return redirect()->to('admin/pembelian')->with('error', 'Proses retur gagal');
         }
+    }    
+
+    public function exportLaporan(){
+        $retur = Pembelian::where('status', 'Retur barang');
+        if(!empty(request()->start)){
+            $start = request()->start;
+            $retur = $retur->where('created_at', '>=', $start);
+        }          
+        if(!empty(request()->end)){
+            $end = request()->end;
+            $retur = $retur->where('created_at', '<=', $end);
+        }     
+
+        $data['returs'] = $retur->get();
+
+        // return view('admin.pembelian.laporan-retur', $data);
+        set_time_limit(300);
+        $pdf = PDF::loadView('admin.pembelian.laporan-retur', $data);
+        return $pdf->setPaper('a4', 'portrait')->download('laporan retur pembelian.pdf');
     }
 
 }

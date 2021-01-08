@@ -66,6 +66,12 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/confirm-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@confirmRetur');
         Route::get('/reject-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@rejectRetur');
         Route::get('/proses-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@prosesRetur');
+
+        #region Laporan
+        Route::get('report/barang', 'Admin\BarangController@exportLaporan')->name('admin.report.barang');
+        Route::get('report/retur-pembelian', 'Admin\ReturPembelianController@exportLaporan')->name('admin.report.retur-pembelian');
+        Route::get('report/retur-penjualan', 'Admin\AdminReturController@exportLaporan')->name('report.retur-penjualan');
+        #endregion
     });
     Route::group(['middleware' => 'can:isCustomer'], function(){
         Route::post('/cart/checkout', 'Customer\CartController@checkout');

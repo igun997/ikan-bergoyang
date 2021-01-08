@@ -6,6 +6,27 @@
 @endsection
 @section('script')
     <script src="{{ asset('admin-asset/assets') }}/js/pages/be_tables_datatables.js"></script>
+    <script>
+        function generateLaporan(){
+            const kategori = $('#modal-filter .kategori').val()||null;
+            const minstok = $('#modal-filter .minstok').val()||null;
+            const maxstok = $('#modal-filter .maxstok').val()||null;
+            let url = '{{url('admin/report/barang')}}';
+            let params = '';
+
+            if(kategori) params += '?kategori='+kategori;
+            if(minstok) {
+                if(params != '') params += '&minstok='+minstok;
+                else params +='?minstok='+minstok;
+            }
+            if(maxstok) {
+                if(params != '') params += '&maxstok='+maxstok;
+                else params +='?maxstok='+maxstok;
+            }
+
+            location.href = url+params;
+        }
+    </script>
 @endsection
 
 @section('css')
@@ -27,6 +48,8 @@
 <div class="block">
     <div class="block-header block-header-default">
         <a href="{{ url('admin/barang/create') }}" class="btn btn-success btn-sm mb-25"><i class="fa fa-plus"></i> Tambah barang</a>
+        
+        <div class="btn btn-info btn-sm mb-25" data-toggle="modal" data-target="#modal-filter"><i class="fa fa-file"></i> Buat Laporan</div>
     </div>
     <div class="block-content block-content-full">
         @include('message')
@@ -77,4 +100,46 @@
     </div>
 </div>
 <!-- END Dynamic Table Full -->
+
+<div class="modal" tabindex="-1" role="dialog" id="modal-filter">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Buat Laporan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <p>Filter Laporan</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <select type="text" class="form-control kategori">
+                            <option value="">Semua</option>
+                            @foreach ($kategori as $item)
+                                <option value="{{$item->id}}">{{$item->nama_kategori}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <input type="number" class="form-control minstok" min=0 placeholder="Stok Terkecil">
+                    </div>                    
+                    <div class="col-6">
+                        <input type="number" class="form-control maxstok" min=1 placeholder="Stok Terbesar">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="generateLaporan()">Download Laporan</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

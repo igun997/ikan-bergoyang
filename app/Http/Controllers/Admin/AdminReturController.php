@@ -8,6 +8,7 @@ use App\Mail\Tesemeil;
 use App\Retur;
 use App\Transaksi;
 use App\TransaksiStatus;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Mail;
 
 class AdminReturController extends Controller
@@ -128,5 +129,29 @@ class AdminReturController extends Controller
             Mail::to('muhammadagungabdillah133@gmail.com')->send(new Tesemeil($details));
             return redirect()->back()->with(['info' => 'Retur diproses']);
         }
+    }
+    
+
+    public function exportLaporan(){
+        $retur = new Retur();
+        if(!empty(request()->status)){
+            $status = request()->status;
+            $retur = $retur->where('status', $status);
+        }       
+        if(!empty(request()->start)){
+            $start = request()->start;
+            $retur = $retur->where('created_at', '>=', $start);
+        }          
+        if(!empty(request()->end)){
+            $end = request()->end;
+            $retur = $retur->where('created_at', '<=', $end);
+        }     
+
+        $data['returs'] = $retur->get();
+
+        // return view('admin.retur.laporan', $data);
+        set_time_limit(300);
+        $pdf = PDF::loadView('admin.retur.laporan', $data);
+        return $pdf->setPaper('a4', 'portrait')->download('laporan retur penjualan.pdf');
     }
 }
