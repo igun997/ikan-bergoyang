@@ -19,24 +19,14 @@
 @endsection
 
 @section('content')
-<h2 class="content-heading">{{ $title }} Transaksi Pembelian</h2>
+<h2 class="content-heading">{{ $title }} Pengajuan Retur Pembelian</h2>
 
 <!-- Dynamic Table Full -->
 <div class="block">
     <div class="block-content">
-        @if($title == 'Detail')
-            <div class="row">
-                <div class="col text-right">
-                    <a href="{{url('admin/pembelian')}}/{{$pembelian->idpembelian}}/print" class="btn btn-primary"><i class="si si-printer"></i>  Print Faktur</a>
-                </div>
-            </div>
-        @endif
         @include('message')
-        <form class="form-horizontal" action="{{ $url }}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" action="{{ url('/proses-retur/'.$pembelian->idpembelian) }}" method="post" enctype="multipart/form-data">
             @csrf
-            @if($title != 'Tambah')
-                @method('put')
-            @endif
             <div class="form-group row">
                 <label class="col-12">No Pembelian</label>
                 <div class="col-md-12">
@@ -64,7 +54,7 @@
             </div>
             <div class="form-group row">
                 <label class="col-12">Kode Permintaan</label>
-                <div class="col-10">
+                <div class="col-12">
                     <input type="text" name="idpermintaan" id="idpermintaan" value="{{@$pembelian->idpermintaan}}" class="form-control" placeholder="Masukkan Kode permintaan" {{$title == 'Detail' ? 'readonly' : ''}}>
                 </div>
                 <div class="col-2">
@@ -72,12 +62,6 @@
                         <button class="btn btn-primary btnCekBarang">Cek Permintaan</button>
                     @endif
                 </div>
-            </div>
-            <div class="row">
-                <label class="col-12">Daftar Barang yang dibeli</label>
-                <div class="col-12"><hr></div>
-                <div class="col-12 barang"></div>
-                <div class="col-12"><hr></div>
             </div>
             <div class="form-group row">
                 <label class="col-12">Total Harga Transaksi</label>
@@ -91,33 +75,34 @@
                     <textarea class="form-control" name="keterangan" cols="20" rows="5" placeholder="Masukan keterangan pembelian" {{$title == 'Detail' ? 'readonly' : ''}}>{{@$pembelian->keterangan}}</textarea>
                 </div>
             </div>
-            @if($title != 'Detail')
+            <div class="row">
+                <label class="col-12">Daftar Barang yang dibeli</label>
+                <div class="col-12"><hr></div>
+                <div class="col-12 barang"></div>
+                <div class="col-12"><hr></div>
+            </div>
+            <div class="form-group row">
+                <label class="col-12">Jumlah barang yang akan diretur</label>
+                @foreach(@$details as $detail)
+                    <div>
+                        <input type="hidden" id="idpembelian" name="idpembelian" value="{{ $pembelian->idpembelian }}">
+                        <input type="hidden" id="idbarang[{{ $detail->idbarang }}]" name="idbarang[{{ $detail->idbarang }}]" value="{{ @$detail->idbarang }}" class="form-control">
+                    </div>
+                    <div class="col-12">
+                        Barang {{ $loop->iteration }}:
+                        <input type="number" id="qty[{{ $detail->idbarang }}]" name="qty[{{ $detail->idbarang }}]" min="0" max="{{ @$detail->qty }}" class="form-control" placeholder="Masukkan jumlah barang yang diretur" required="required">
+                    </div>
+                @endforeach
+            </div>
             <div class="form-group row">
                 <div class="col-md-12 text-right">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a href="#" data-url="{{ url('admin/proses-retur/'.$pembelian->idpembelian) }}" class="btn btn-danger btnRetur">Proses retur</a>
                 </div>
             </div>
-            @else
-                @if($pembelian->status != 'Barang sudah diterima' && $pembelian->status != 'Retur barang')
-                    <div class="form-group row">
-                        <div class="col-md-12 text-right">
-                            <button type="button" class="btn btn-primary btnTerima">Konfirmasi Penerimaan Barang</button>
-                        </div>
-                    </div>
-                    @endif
-                @if($pembelian->status == 'Barang sudah diterima')
-                    <div class="form-group row">
-                        <div class="col-md-12 text-right">
-                            <a href="{{ url('admin/form-retur/'.$pembelian->idpembelian) }}" class="btn btn-danger">Ajukan retur Barang</a>
-                            {{-- <a href="#" data-url="{{ url('admin/proses-retur/'.$pembelian->idpembelian) }}" class="btn btn-danger btnRetur">Ajukan retur Barang</a> --}}
-                        </div>
-                    </div>
-                @endif
-            @endif
         </form>
         <form action="#" method="post" id="formRetur" class="d-none">
             @csrf
-            @method('get')
+            @method('post')
         </form>
     </div>
 </div>

@@ -54,7 +54,7 @@
             </thead>
             <tbody>
             @foreach($transaksis as $transaksi)
-                @if($transaksi->status != 'Retur barang')
+                @if($transaksi->status != 'Retur barang' && $transaksi->status != 'Menunggu acc pemilik')
                     <tr>
                         <td>{{ $loop->iteration}}</td>
                         <td>#{{ $transaksi->idpembelian }}</td>

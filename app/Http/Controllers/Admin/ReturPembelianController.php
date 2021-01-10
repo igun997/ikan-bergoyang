@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Barang;
 use App\DetailPermintaan;
+use App\DetailRetur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Pembelian;
+use App\Supplier;
 use Barryvdh\DomPDF\Facade as PDF;
-use Dotenv\Validator;
 
 class ReturPembelianController extends Controller
 {
@@ -20,6 +22,7 @@ class ReturPembelianController extends Controller
     public function index()
     {
         $data['transaksis'] = Pembelian::where('status', 'Retur barang')->orderBy('created_at', 'desc')->get();
+        $data['returs'] = Pembelian::where('status', 'Menunggu acc pemilik')->orderBy('created_at', 'desc')->get();
         return view('admin.retur.pembelian', $data);
     }
 
@@ -56,6 +59,23 @@ class ReturPembelianController extends Controller
         return view('admin.retur.show', $data);
     }
 
+    public function formRetur($id)
+    {
+        $data['title'] = "Detail";
+        $data['url'] = url('/admin/pembelian');
+        $data['suppliers'] = Supplier::all();
+        $data['pembelian'] = Pembelian::where('idpembelian', $id)->first();
+        $data['details'] = DetailPermintaan::where('idpembelian', $data['pembelian']->idpermintaan)->get();
+        // $data['kodebarangs'] = array();
+        // foreach($data['details'] as $detail) {
+        //     array_push($data['kodebarangs'], $detail->idbarang);
+        // }
+        // echo($data['details']->idbarang);
+        // print_r($data['kodebarangs']);
+        // dd();
+        return view('admin.retur.form-retur', $data);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -90,33 +110,94 @@ class ReturPembelianController extends Controller
         //
     }
 
-    public function prosesRetur($id)
+    public function prosesRetur(Request $request, $id)
     {
-        $pembelian = Pembelian::where('idpembelian', $id)->first();
-        if($pembelian->idpermintaan) {
-            $detail = DetailPermintaan::where('idpembelian', $pembelian->idpermintaan)->first();
-            if($detail) {
-                $barang = Barang::where('id', $detail->idbarang)->first();
-                $qty = $barang->stok - $detail->qty;
-                $update = Barang::where('id', $detail->idbarang)->update(['stok' => $qty]);
-                if($pembelian && $update) {
-                    $stat = Pembelian::where('idpembelian', $pembelian->idpembelian)->update(['status' => 'Retur barang']);
-                    if ($stat) {
-                        return redirect()->to('admin/retur-pembelian')->with('info', 'Proses retur berhasil');
-                    } else {
-                        return redirect()->to('admin/pembelian')->with('error', 'Proses retur gagal');
-                    }
+        $input = $request->all();
+        $idp = $request->get('idpembelian');
+
+        foreach($request->get('qty') as $idbarang => $qty) {
+            echo($qty);
+        }
+
+        $validate = Validator::make($input, [
+            'idpembelian' => 'required',
+            'idbarang.*' => 'required',
+            'qty.*' => 'required'
+        ]);
+        // print_r($input);
+        // echo($idp);
+        dd();
+
+        if($validate->fails()) {
+            return redirect()->back()->withErrors($validate->errors())->withInput($input);
+        } else {
+            $pembelian = Pembelian::where('idpembelian', $id)->first();
+            $query = DetailRetur::create($input);
+            if($pembelian && $query) {
+                $stat = Pembelian::where('idpembelian', $pembelian->idpembelian)->update(['status' => 'Menunggu acc pemilik']);
+                if ($stat) {
+                    return redirect()->to('admin/retur-pembelian')->with('info', 'Retur berhasil diproses');
                 } else {
-                    return redirect()->to('/pembelian')->with('error', 'Terjadi kesalahan');
+                    return redirect()->to('admin/pembelian')->with('error', 'Retur gagal diproses');
                 }
-                echo($pembelian);
             } else {
-                return redirect()->to('admin/pembelian')->with('error', 'Proses retur gagal');
+                return redirect()->to('/pembelian')->with('error', 'Terjadi kesalahan');
+            }
+
+        }
+
+        // if($pembelian->idpermintaan) {
+        //     $detail = DetailPermintaan::where('idpembelian', $pembelian->idpermintaan)->first();
+        //     if($detail) {
+        //         $barang = Barang::where('id', $detail->idbarang)->first();
+        //         $qty = $barang->stok - $detail->qty;
+        //         $update = Barang::where('id', $detail->idbarang)->update(['stok' => $qty]);
+        //         echo($pembelian);
+        //     } else {
+        //         return redirect()->to('admin/pembelian')->with('error', 'Proses retur gagal');
+        //     }
+        // } else {
+        //     return redirect()->to('admin/pembelian')->with('error', 'Proses retur gagal');
+        // }
+    }
+
+    public function confirmRetur($id)
+    {
+        $details = DetailRetur::where('idpembelian', $id)->get();
+        $arr = array();
+        foreach($details as $detail) {
+            $arr[$detail->idbarang] = $detail->qty;
+        }
+        print_r($arr);
+        dd();
+        $pembelian = Pembelian::where('idpembelian', $id)->first();
+        if($pembelian) {
+            $stat = Pembelian::where('idpembelian', $pembelian->idpembelian)->update(['status' => 'Retur barang']);
+            if ($stat) {
+                return redirect()->to('admin/retur-pembelian')->with('info', 'Retur berhasil di acc');
+            } else {
+                return redirect()->to('admin/pembelian')->with('error', 'Retur gagal di acc');
             }
         } else {
-            return redirect()->to('admin/pembelian')->with('error', 'Proses retur gagal');
+            return redirect()->to('/pembelian')->with('error', 'Terjadi kesalahan');
         }
-    }    
+    }
+
+    public function rejectRetur($id)
+    {
+        $pembelian = Pembelian::where('idpembelian', $id)->first();
+        if($pembelian) {
+            $stat = Pembelian::where('idpembelian', $pembelian->idpembelian)->update(['status' => 'Barang sudah diterima']);
+            $del = DetailRetur::where('idpembelian', $id)->delete();
+            if ($stat && $del) {
+                return redirect()->to('admin/retur-pembelian')->with('info', 'Retur berhasil ditolak');
+            } else {
+                return redirect()->to('admin/pembelian')->with('error', 'Retur gagal ditolak');
+            }
+        } else {
+            return redirect()->to('/pembelian')->with('error', 'Terjadi kesalahan');
+        }
+    }
 
     public function exportLaporan(){
         $retur = Pembelian::where('status', 'Retur barang');

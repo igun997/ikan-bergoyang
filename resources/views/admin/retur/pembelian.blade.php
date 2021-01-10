@@ -49,6 +49,53 @@
 @endsection
 
 @section('content')
+<h2 class="content-heading">Retur Dalam Proses</h2>
+
+<!-- Dynamic Table Full -->
+<div class="block">
+    <div class="block-content block-content-full">
+        @include('message')
+
+        <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/be_tables_datatables.js -->
+        <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>No. Transaksi</th>
+                <th>Supplier</th>
+                <th>Tanggal Dibuat</th>
+                <th>Total Harga</th>
+                <th>Keterangan</th>
+                <th>Status</th>
+                <th class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($returs as $retur)
+                <tr>
+                    <td>{{ $loop->iteration}}</td>
+                    <td>#{{ $retur->idpembelian }}</td>
+                    <td>{{ $retur->supplier->nama }}</td>
+                    <td>{{ $retur->created_at }}</td>
+                    <td>{{ $retur->totalharga }}</td>
+                    <td>{{ $retur->keterangan }}</td>
+                    <td>{{ $retur->status }}</td>
+                    <td class="text-center">
+                        @if(auth()->user()->level == 1)
+                            <a href="{{ url('admin/confirm-retur-pembelian/'.$retur->idpembelian) }}" class="btn btn-primary">Acc Retur</a>
+                            <a href="{{ url('admin/reject-retur-pembelian/'.$retur->idpembelian) }}" class="btn btn-danger">Tolak Retur</a>
+                        @else
+                            No action available
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END Dynamic Table Full -->
+
 <h2 class="content-heading">Retur Pembelian</h2>
 
 <!-- Dynamic Table Full -->
