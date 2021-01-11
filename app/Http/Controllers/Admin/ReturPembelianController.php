@@ -164,22 +164,36 @@ class ReturPembelianController extends Controller
     public function confirmRetur($id)
     {
         $details = DetailRetur::where('idpembelian', $id)->get();
-        $arr = array();
+        $countst = 0;
+
         foreach($details as $detail) {
-            $arr[$detail->idbarang] = $detail->qty;
-        }
-        print_r($arr);
-        dd();
-        $pembelian = Pembelian::where('idpembelian', $id)->first();
-        if($pembelian) {
-            $stat = Pembelian::where('idpembelian', $pembelian->idpembelian)->update(['status' => 'Retur barang']);
-            if ($stat) {
-                return redirect()->to('admin/retur-pembelian')->with('info', 'Retur berhasil di acc');
+            $barang = Barang::where('id', $detail->idbarang)->first();
+            
+            if ($barang) {
+                $stok = $barang->stok - $detail->qty;
+                $update = Barang::where('id', $detail->idbarang)->update(['stok' => $stok]);
+                
+                if ($update) {
+                    $pembelian = Pembelian::where('idpembelian', $id)->first();
+                    
+                    if ($pembelian) {
+                        $stat = Pembelian::where('idpembelian', $pembelian->idpembelian)->update(['status' => 'Retur barang']);
+                        
+                        if ($stat) {
+                            $countst++;
+                        }
+                    } else {
+                        return redirect()->to('/retur-pembelian')->with('error', 'Terjadi kesalahan');
+                    }
+                }
             } else {
-                return redirect()->to('admin/pembelian')->with('error', 'Retur gagal di acc');
+                return redirect()->to('admin/retur-pembelian')->with('error', 'Terjadi kesalahan');
             }
+        }
+        if ($countst != 0) {
+            return redirect()->to('admin/retur-pembelian')->with('info', 'Retur berhasil di acc');
         } else {
-            return redirect()->to('/pembelian')->with('error', 'Terjadi kesalahan');
+            return redirect()->to('admin/retur-pembelian')->with('error', 'Retur gagal di acc');
         }
     }
 
