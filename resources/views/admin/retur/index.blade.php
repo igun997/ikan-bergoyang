@@ -34,10 +34,18 @@
                              detail_barang += "<tr>";
                              detail_barang += "<td>"+(idx+1)+"</td>";
                              detail_barang += "<td>"+detail.barang.nama_barang+"</td>";
-                             detail_barang += "<td>"+detail.barang.nama_barang+"</td>";
-                             detail_barang += "<td>"+detail.barang.nama_barang+"</td>";
-                             detail_barang += "<td>"+detail.barang.nama_barang+"</td>";
-                             detail_barang += "<td>"+detail.barang.nama_barang+"</td>";
+                             detail_barang += "<td>"+retur.reason+"</td>";
+                             detail_barang += "<td>"+detail.qty+"</td>";
+                             detail_barang += "<td>"+detail.barang.harga+"</td>";
+                             detail_barang += "<td>"+detail.qty*detail.barang.harga+"</td>";
+                             detail_barang += "</tr>";
+                             detail_barang += "<tr>";
+                             detail_barang += "<td>Total</td>";
+                             detail_barang += "<td></td>";
+                             detail_barang += "<td></td>";
+                             detail_barang += "<td></td>";
+                             detail_barang += "<td></td>";
+                             detail_barang += "<td>"+retur.transaksi.total_harga+"</td>";
                              detail_barang += "</tr>";
                         });
                         $('#tblDetailRetur tbody').html(detail_barang);
@@ -135,8 +143,6 @@
                             <a href="{{ url('admin/reject-retur/'.$retur->id.'/'.$retur->transaksi_id) }}" class="btn btn-block btn-danger">Tolak</a>
                             @elseif($retur->status == 11)
                             <a href="{{ url('admin/proses-retur/'.$retur->id.'/'.$retur->transaksi_id) }}" class="btn btn-block btn-primary">Proses Retur</a>
-                            @else
-                            No action available
                             @endif
                         </td>
                     </tr>
@@ -215,7 +221,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Detail Retur</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -283,7 +289,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
