@@ -66,13 +66,6 @@ class ReturPembelianController extends Controller
         $data['suppliers'] = Supplier::all();
         $data['pembelian'] = Pembelian::where('idpembelian', $id)->first();
         $data['details'] = DetailPermintaan::where('idpembelian', $data['pembelian']->idpermintaan)->get();
-        // $data['kodebarangs'] = array();
-        // foreach($data['details'] as $detail) {
-        //     array_push($data['kodebarangs'], $detail->idbarang);
-        // }
-        // echo($data['details']->idbarang);
-        // print_r($data['kodebarangs']);
-        // dd();
         return view('admin.retur.form-retur', $data);
     }
 

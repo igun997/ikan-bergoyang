@@ -89,7 +89,7 @@
                         <input type="hidden" id="idbarang[{{ $detail->idbarang }}]" name="idbarang[{{ $detail->idbarang }}]" value="{{ @$detail->idbarang }}" class="form-control">
                     </div>
                     <div class="col-12">
-                        Barang {{ $loop->iteration }}:
+                        {{ $detail->barang->kodebarang }}:
                         <input type="number" id="qty[{{ $detail->idbarang }}]" name="qty[{{ $detail->idbarang }}]" min="0" max="{{ @$detail->qty }}" class="form-control" placeholder="Masukkan jumlah barang yang diretur" required="required">
                     </div>
                 @endforeach
