@@ -57,6 +57,11 @@ class AdminReturController extends Controller
         $data['retur'] = Retur::find($id);
         return view('admin.retur.detail', $data);
     }
+    public function getRetur($id)
+    {
+        $data = Retur::with(['transaksi','transaksi.detail','transaksi.detail.barang','user','transaksistatus','delivery'])->find($id);
+        return response()->json($data);
+    }
 
     /**
      * Show the form for editing the specified resource.

@@ -113,27 +113,28 @@ class ReturPembelianController extends Controller
     public function prosesRetur(Request $request, $id)
     {
         $input = $request->all();
-        $idp = $request->get('idpembelian');
-
-        foreach($request->get('qty') as $idbarang => $qty) {
-            echo($qty);
-        }
+        $idp = $request->idpembelian;
 
         $validate = Validator::make($input, [
             'idpembelian' => 'required',
             'idbarang.*' => 'required',
             'qty.*' => 'required'
         ]);
-        // print_r($input);
-        // echo($idp);
-        dd();
 
         if($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors())->withInput($input);
         } else {
             $pembelian = Pembelian::where('idpembelian', $id)->first();
-            $query = DetailRetur::create($input);
-            if($pembelian && $query) {
+            
+            if($pembelian) {
+                foreach ($request->qty as $idbarang => $qty) {
+                    $detail = [
+                        'idpembelian' => $id,
+                        'idbarang' => $idbarang,
+                        'qty' => $qty,
+                    ];
+                    $query = DetailRetur::create($detail);
+                }
                 $stat = Pembelian::where('idpembelian', $pembelian->idpembelian)->update(['status' => 'Menunggu acc pemilik']);
                 if ($stat) {
                     return redirect()->to('admin/retur-pembelian')->with('info', 'Retur berhasil diproses');

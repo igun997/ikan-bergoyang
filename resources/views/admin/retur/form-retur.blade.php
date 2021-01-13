@@ -25,7 +25,7 @@
 <div class="block">
     <div class="block-content">
         @include('message')
-        <form class="form-horizontal" action="{{ url('/proses-retur/'.$pembelian->idpembelian) }}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" action="{{ url('/proses-retur/'.$pembelian->idpembelian) }}" method="post" enctype="multipart/form-data" id="formRetur">
             @csrf
             <div class="form-group row">
                 <label class="col-12">No Pembelian</label>
@@ -100,10 +100,10 @@
                 </div>
             </div>
         </form>
-        <form action="#" method="post" id="formRetur" class="d-none">
+        {{-- <form action="#" method="post" id="formRetur" class="d-none">
             @csrf
             @method('post')
-        </form>
+        </form> --}}
     </div>
 </div>
 @endsection

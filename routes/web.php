@@ -70,6 +70,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/confirm-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@confirmRetur');
         Route::get('/reject-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@rejectRetur');
         Route::get('/proses-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@prosesRetur');
+        Route::get('/get-retur/{idRetur}', 'Admin\AdminReturController@getRetur');
 
         #region Laporan
         Route::get('report/barang', 'Admin\BarangController@exportLaporan')->name('admin.report.barang');

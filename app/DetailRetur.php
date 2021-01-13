@@ -8,7 +8,7 @@ class DetailRetur extends Model
 {
     protected $table = 'detail_retur';
     protected $fillable = [
-        'transaksi_id', 'barang_id', 'qty'
+        'idpembelian', 'idbarang', 'qty'
     ];
 
     public $timestamps = false;
