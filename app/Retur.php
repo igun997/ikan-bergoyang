@@ -24,4 +24,8 @@ class Retur extends Model
     {
         return $this->hasOne('App\TransaksiStatus', 'idstatus', 'status');
     }
+
+    public function delivery() {
+        return $this->hasOne('App\Delivery', 'user_id', 'user_id');
+    }
 }

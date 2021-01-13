@@ -101,7 +101,7 @@
                                                     @endif
                                                     <td class="text-center">
                                                         @if($retur->status == 8)
-                                                        <a href="#" class="btn btn-danger btnDelete"><i class="fa fa-times" title="Cancel retur"></i></a>
+                                                        <a href="#" data-url="{{ url('retur/'.$retur->id) }}" class="btn btn-danger btnCancel"><i class="fa fa-times" title="Cancel retur"></i></a>
                                                         @elseif($retur->status == 9)
                                                         <a href="{{ url('delivery-info') }}/{{ $retur->id }}" class="btn btn-warning">Lanjutkan Proses Retur</a>
                                                         @else
@@ -110,7 +110,7 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
-                                            <form action="{{ url('retur/'.$retur->id) }}" method="post" id="formDelete" class="d-none">
+                                            <form action="#" method="post" id="formCancel" class="d-none">
                                                 @csrf
                                                 @method('delete')
                                             </form>

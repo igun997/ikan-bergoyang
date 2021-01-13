@@ -54,7 +54,8 @@ class AdminReturController extends Controller
      */
     public function show($id)
     {
-        echo $id;
+        $data['retur'] = Retur::find($id);
+        return view('admin.retur.detail', $data);
     }
 
     /**

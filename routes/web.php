@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/transaksi/report/monthly/{bulan}/{tahun}', 'Admin\TransaksiController@reportMonthly');
 
         Route::resource('retur', 'Admin\AdminReturController');
+        Route::get('/detail-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@show');
         Route::get('/confirm-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@confirmRetur');
         Route::get('/reject-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@rejectRetur');
         Route::get('/proses-retur/{idRetur}/{idTransaksi}', 'Admin\AdminReturController@prosesRetur');

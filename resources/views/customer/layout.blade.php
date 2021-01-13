@@ -189,6 +189,26 @@ _________________________________________________________
             });
         });
     });
+
+    $('body').on('click', '.btnCancel', function(e){
+            e.preventDefault();
+
+            var url = $(this).data('url');
+            swal({
+                    title: "Konfirmasi tindakan",
+                    text: "Apakah anda yakin ingin membatalkan retur?",
+                    type: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#f33c37",
+                    showLoaderOnConfirm: true,
+                }).then(function(inputValue) {
+                    console.log(inputValue.value);
+                    if (inputValue.value===true) {
+                        $('#formCancel').attr('action', url);
+                        $('#formCancel').submit();
+                    }
+                });
+        });
 </script>
 </body>
 </html>

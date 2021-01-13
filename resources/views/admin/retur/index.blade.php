@@ -95,6 +95,8 @@
                         <td>No data available</td>
                         @endif
                         <td class="text-center">
+                            <a href="#" onclick="popupFunction({{ $retur->transaksi_id }})" class="btn btn-block btn-primary"><i class="fa fa-user"></i> Detail User</a>
+                            <a href="{{ url('admin/detail-retur/'.$retur->id.'/'.$retur->transaksi_id) }}" class="btn btn-block btn-primary"><i class="fa fa-eye"></i> Detail Retur</a>
                             @if($retur->status == 8)
                             <a href="{{ url('admin/confirm-retur/'.$retur->id.'/'.$retur->transaksi_id) }}" class="btn btn-block btn-primary">Terima</a>
                             <a href="{{ url('admin/reject-retur/'.$retur->id.'/'.$retur->transaksi_id) }}" class="btn btn-block btn-danger">Tolak</a>

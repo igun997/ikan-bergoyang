@@ -1,0 +1,120 @@
+@extends('admin.layout')
+
+@section('js')
+    <script src="{{ asset('admin-asset/assets') }}/js/plugins/select2/select2.full.min.js"></script>
+@endsection
+@section('script')
+    <script>
+        $('.select2').select2();
+
+        $('.gambar').on('change', function(){
+            var input = this;
+            var url = $(this).val();
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.img-preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        });
+    </script>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('admin-asset/assets') }}/js/plugins/select2/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('admin-asset/assets') }}/js/plugins/select2/select2-bootstrap.min.css">
+
+@endsection
+@section('style')
+    <style>
+        .img-preview{
+            width: 100px;
+            margin-bottom: 20px;
+            display: block;
+        }
+    </style>
+@endsection
+
+@section('content')
+<h2 class="content-heading">Detail Retur</h2>
+
+<div class="block">
+    <div class="block-header block-header-default">
+        <h3 class="block-title">Retur Nomor #<?php echo nl2br($retur->id."\nTransaksi Nomor #".$retur->transaksi_id); ?></h3>
+        <div class="block-options">
+            <!-- Print Page functionality is initialized in Codebase() -> uiHelperPrint() -->
+            <button type="button" class="btn-block-option" onclick="Codebase.helpers('print-page');">
+                <i class="si si-printer"></i> Print Invoice
+            </button>
+        </div>
+    </div>
+    <div class="block-content">
+        <!-- Invoice Info -->
+        <div class="row my-20">
+            <!-- Company Info -->
+            <div class="col-6">
+                <p class="h3">KONFEKSI J&S</p>
+                <address>
+                    Jalan hajianwar No.22b RT 01 RW 08 kel. Cibuntu<br>
+                    Kec. Bandung<br>
+                    40212<br>
+                    <a href="mailto:jands@gmail.com">jands@gmail.com</a>
+                </address>
+            </div>
+            <!-- END Company Info -->
+
+            <!-- Client Info -->
+            <div class="col-6 text-right">
+                <p class="h3">{{ $retur->delivery->nama }}</p>
+                <address>
+                    {{ $retur->delivery->alamat }}<br>
+                    {{ $retur->delivery->kode_pos }}<br>
+                    {{ $retur->delivery->no_telp }}<br>
+                    <a href="mailto:{{ $retur->delivery->email }}">{{ $retur->delivery->email }}</a>
+                </address>
+            </div>
+            <!-- END Client Info -->
+        </div>
+        <!-- END Invoice Info -->
+
+        <!-- Table -->
+        <div class="table-responsive push">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center" style="width: 60px;"></th>
+                    <th>Product</th>
+                    <th class="text-left" style="width: 250px;">Alasan Retur</th>
+                    <th class="text-center" style="width: 90px;">Qty</th>
+                    <th class="text-right" style="width: 120px;">Unit</th>
+                    <th class="text-right" style="width: 120px;">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($retur->transaksi->detail as $key => $detail)
+                <tr>
+                    <td class="text-center">{{ $key+1 }}</td>
+                    <td>
+                        <p class="font-w600 mb-5">{{ $detail->barang->nama_barang }}</p>
+                        <div class="text-muted">{{ $detail->barang->deskripsi }}</div>
+                    </td>
+                    <td>{{ @$retur->reason }}</td>
+                    <td class="text-center">
+                        <span class="badge badge-pill badge-primary">{{ $detail->qty }}</span>
+                    </td>
+                    <td class="text-right">@rupiah($detail->barang->harga)</td>
+                    <td class="text-right">@rupiah($detail->barang->harga*$detail->qty)</td>
+                </tr>
+                @endforeach
+                <tr class="table-warning">
+                    <td colspan="5" class="font-w700 text-uppercase text-right">Total</td>
+                    <td class="font-w700 text-right">@rupiah($retur->total_harga)</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END Table -->
+    </div>
+</div>
+<!-- END Invoice -->
+@endsection
