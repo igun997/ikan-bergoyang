@@ -12,7 +12,7 @@
     <h2 class="content-heading">{{$title}}</h2>
 
     <div class="row">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <div class="block">
                 <div class="block-content block-content-full">
                     <form action="" method="post">
@@ -38,38 +38,78 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8">
-            <div class="block">
-                <div class="block-content block-content-full">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Barang</th>
-                                    <th>Qty</th>
-                                    <th>Suplier</th>
-                                    <th>Harga Barang <span class="badge badge-info">Saat PO</span></th>
-                                    <th>Subtotal</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                               @foreach($detail->po_details as $key => $row)
-                                <tr>
-                                    <td>{{($key+1)}}</td>
-                                    <td>{{$row->barang->nama_barang}}</td>
-                                    <td>{{$row->qty}}</td>
-                                    <td>{{$row->supplier->nama}}</td>
-                                    <td>{{number_format($row->price)}}</td>
-                                    <td>{{number_format($row->subtotal)}}</td>
-                                    <td>{{\App\Casts\PoDetailStatus::lang($row->status)}}</td>
-                                </tr>
-                               @endforeach
-                            </tbody>
-                        </table>
+        <div class="col-12 col-md-9">
+            <div class="row">
+                <div class="col-12">
+                    <div class="block">
+                        <div class="block-content block-content-full">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Barang</th>
+                                        <th>Qty</th>
+                                        <th>Suplier</th>
+                                        <th>Harga Barang <span class="badge badge-info">Saat PO</span></th>
+                                        <th>Subtotal</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($detail->po_details as $key => $row)
+                                        <tr>
+                                            <td>{{($key+1)}}</td>
+                                            <td>{{$row->barang->nama_barang}}</td>
+                                            <td>{{$row->qty}}</td>
+                                            <td>{{$row->supplier->nama}}</td>
+                                            <td>{{number_format($row->price)}}</td>
+                                            <td>{{number_format($row->subtotal)}}</td>
+                                            <td>{{\App\Casts\PoDetailStatus::lang($row->status)}}</td>
+                                            <td>
+                                                <a href="{{route("po.detail",[$detail->id,"detail"=>$row->id])}}" class="btn btn-info">Detail Penerimaan</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                @if($is_pemerimaan)
+                    <div class="col-12 mt-10">
+                        <div class="block">
+                            <div class="block-header">
+                                Data Penerimaan Barang
+                            </div>
+                            <div class="block-content block-content-full">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Diterima</th>
+                                            <th>Pada Tanggal</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($received as $_key => $_row)
+                                                <tr>
+                                                    <td>{{($_key+1)}}</td>
+                                                    <td align="center">{{number_format($_row->qty)}}</td>
+                                                    <td>{{$_row->created_at ?? " - "}}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                @endif
             </div>
         </div>
     </div>

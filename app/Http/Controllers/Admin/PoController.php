@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Casts\PoDetailStatus;
 use App\Casts\PoStatus;
 use App\Models\Po;
+use App\Models\PoDetail;
+use App\Models\PoReceived;
 use App\Traits\ViewTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -57,15 +60,88 @@ class PoController extends Controller
             $po->notes = $req->msg;
         }
         if ($po->save()){
+            if ($req->status == PoStatus::BARANG_SEDANG_DITERIMA){
+                return redirect()->route("po.penerimaan",$po->id);
+            }
             return back()->with(["msg"=>"Data Telah Di Ubah"]);
         }
         return  back()->withErrors(["msg"=>"Data Gagal Di Ubah"]);
     }
 
-    public function detail($id)
+    public function detail(Request  $req,$id)
     {
         $detail = Po::findOrFail($id);
         $title = "Detail PO #".$detail->no_po;
-        return $this->loadView("detail",compact("title","detail"));
+        $is_pemerimaan = false;
+        $received = null;
+        if ($req->has("detail")){
+            $id = $req->has("detail");
+            $received = PoReceived::where(["po_detail_id"=>$id])->get();
+            $is_pemerimaan = true;
+        }
+        return $this->loadView("detail",compact("title","detail","received","is_pemerimaan"));
+    }
+
+    public function penerimaan(Request $req,$id)
+    {
+        $detail = Po::findOrFail($id);
+        if ($detail->status != PoStatus::BARANG_SEDANG_DITERIMA){
+            return back()->withErrors(["msg"=>"Error Status Pengadaan Salah !"]);
+        }
+        $title = "Penerimaan Barang ".$detail->no_po;
+        return  $this->loadView("penerimaan",compact("title","detail"));
+    }
+
+    public function penerimaan_add_action(Request $req,$id)
+    {
+        $req->validate([
+            "penerimaan.*"=>"required|numeric",
+            "po_detail_id.*"=>"required|numeric",
+        ]);
+
+        $batch = [];
+        $is_completed = [];
+        foreach ($req->penerimaan as $index => $item) {
+            $detail = PoDetail::find($req->po_detail_id[$index]);
+            $sisa = $detail->qty - $detail->po_receiveds->sum("qty");
+            if (($sisa - $item) > 0){
+                $batch[] = [
+                    "po_detail_id"=>$req->po_detail_id[$index],
+                    "qty"=>$item,
+                    "created_at"=>date("Y-m-d")
+                ];
+                $detail->barang->update(["stok"=>($detail->barang->stok + $item)]);
+                $is_completed[] = 0;
+                $detail->status = PoDetailStatus::BARANG_SEDANG_TERIMA;
+            }else{
+                $is_completed[] = 1;
+                $batch[] = [
+                    "po_detail_id"=>$req->po_detail_id[$index],
+                    "qty"=>$item,
+                    "created_at"=>date("Y-m-d")
+                ];
+                $detail->barang->update(["stok"=>($detail->barang->stok + $item)]);
+
+                $detail->status = PoDetailStatus::BARANG_SELESAI_DI_TERIMA;
+            }
+            $detail->save();
+        }
+        $other_redirect = false;
+        if (array_sum(array_unique($is_completed)) === 1){
+            $po = Po::find($id);
+            $po->status = PoStatus::BARANG_SELESAI_DITERIMA;
+            $po->save();
+            $other_redirect = true;
+        }
+
+        $create = PoReceived::insert($batch);
+        if ($create){
+            if ($other_redirect){
+                return redirect()->route("po.list");
+            }
+            return back()->with(["msg"=>"Data Telah Di Update"]);
+        }
+        return back()->withErrors(["msg"=>"Data Gagal Di Ubah"]);
+
     }
 }

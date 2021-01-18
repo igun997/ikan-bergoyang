@@ -59,9 +59,19 @@
                                 @if($row->po_details->count() == 0)
                                     <a href="{{route("po.barang.add",$row->id)}}" class="btn btn-success btn-sm m-1">Tambah Barang</a>
                                 @endif
-                                @if(\Illuminate\Support\Facades\Auth::user()->level == 1 && \App\Casts\PoStatus::MENUNGGU_VERIFIKASI_OWNER)
+                                @if(\Illuminate\Support\Facades\Auth::user()->level == 1 && \App\Casts\PoStatus::MENUNGGU_VERIFIKASI_OWNER === $row->status)
                                     <a href="{{route("po.update_status",[$row->id,"status"=>\App\Casts\PoStatus::MENUNGGU_KONFIRMASI_GUDANG])}}" class="btn btn-success btn-sm m-1">Verifikasi</a>
                                     <button class="btn btn-danger btn-sm m-1 tolak" data-id="{{$row->id}}">Tolak</button>
+                                @endif
+                                @if((\Illuminate\Support\Facades\Auth::user()->level == 3 && (\App\Casts\PoStatus::MENUNGGU_KONFIRMASI_GUDANG == $row->status)) || (\Illuminate\Support\Facades\Auth::user()->level == 1 && (\App\Casts\PoStatus::MENUNGGU_KONFIRMASI_GUDANG == $row->status)))
+                                    <a href="{{route("po.update_status",[$row->id,"status"=>\App\Casts\PoStatus::SEDANG_DIPROSES])}}" class="btn btn-success btn-sm m-1">Proses Pengadaan</a>
+                                    <a href="{{route("po.update_status",[$row->id,"status"=>\App\Casts\PoStatus::DIBATALKAN_GUDANG])}}" class="btn btn-danger btn-sm m-1">Batalkan Pengadaan</a>
+                                @endif
+                                @if((\Illuminate\Support\Facades\Auth::user()->level == 3 && \App\Casts\PoStatus::SEDANG_DIPROSES == $row->status) || (\Illuminate\Support\Facades\Auth::user()->level == 1 && \App\Casts\PoStatus::SEDANG_DIPROSES == $row->status))
+                                    <a href="{{route("po.update_status",[$row->id,"status"=>\App\Casts\PoStatus::BARANG_SEDANG_DITERIMA])}}" class="btn btn-success btn-sm m-1">Penerimaan Barang</a>
+                                @endif
+                                @if((\Illuminate\Support\Facades\Auth::user()->level == 3 && \App\Casts\PoStatus::BARANG_SEDANG_DITERIMA == $row->status) || (\Illuminate\Support\Facades\Auth::user()->level == 1 && \App\Casts\PoStatus::BARANG_SEDANG_DITERIMA == $row->status))
+                                    <a href="{{route("po.penerimaan",[$row->id])}}" class="btn btn-info btn-sm m-1">Penerimaan Barang</a>
                                 @endif
                             </td>
                         </tr>

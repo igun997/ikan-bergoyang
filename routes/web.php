@@ -48,7 +48,6 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post("/barang/{id}/add","PoController@barang_add_action")->name("barang.add.action");
             Route::get("/update_status/{id?}","PoController@update_status")->name("update_status");
             Route::get("/penerimaan/{id}","PoController@penerimaan")->name("penerimaan");
-            Route::get("/penerimaan/{id}/add","PoController@penerimaan_add")->name("penerimaan.add");
             Route::post("/penerimaan/{id}/add","PoController@penerimaan_add_action")->name("penerimaan.add.action");
 
         });
