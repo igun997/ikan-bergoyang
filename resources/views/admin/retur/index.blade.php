@@ -13,8 +13,8 @@
                 format: 'yyyy-mm-dd'
             });
             $(document).on('click','.detail-user',function(){
-                var data = $(this).data('user');
-                console.log(data);
+                var data_user = $(this).data('user');
+                console.log(data_user);
                 $("#IsiModal").html('<table width="100%" style="font-size:14px"><tr><td>Nama</td><td>:</td><td>'+data.nama+'</td></tr><tr><td>Alamat</td><td>:</td><td>'+data.alamat+'</td></tr><tr><td>Nomor Telepon</td><td>:</td><td>'+data.no_telp+'</td></tr><tr><td>E-mail</td><td>:</td><td>'+data.email+'</td></tr></table>');
                 $('#ModalDetail').modal('show');
             });
@@ -49,6 +49,11 @@
                              detail_barang += "</tr>";
                         });
                         $('#tblDetailRetur tbody').html(detail_barang);
+                        var data_user = "";
+                        $.each(retur.transaksi.detail, function (idx, data) {
+                             data_user += "<p><h3>"+retur.delivery.nama+"</h3><br>"+retur.delivery.alamat+"<br>"+retur.delivery.no_telp+"<br>"+retur.delivery.email+"</p>";
+                        });
+                        $('#client-info').html(data_user);
                         $('#Modalretur').modal('show');
                     }
                 });
@@ -136,7 +141,6 @@
                         <td>No data available</td>
                         @endif
                         <td class="text-center">
-                            <button data-user="{{ json_encode($retur->delivery) }}" class="btn btn-block btn-primary detail-user"><i class="fa fa-user"></i> Detail User</button>
                             <button class="btn btn-block btn-primary detail-retur" data-id="{{ $retur->id }}"><i class="fa fa-eye"></i> Detail Retur</button>
                             @if($retur->status == 8)
                             <a href="{{ url('admin/confirm-retur/'.$retur->id.'/'.$retur->transaksi_id) }}" class="btn btn-block btn-primary">Terima</a>
@@ -256,10 +260,8 @@
                             <!-- END Company Info -->
                 
                             <!-- Client Info -->
-                            <div class="col-6 text-right">
-                                <p class="h3"></p>
-                                <address>
-                                </address>
+                            <div class="col-6 text-right" id="client-info">
+                                
                             </div>
                             <!-- END Client Info -->
                         </div>
