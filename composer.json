@@ -16,6 +16,7 @@
         "kavist/rajaongkir": "^1.1",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
+        "orangehill/iseed": "^3.0",
         "rizalafani/rajaongkir": "^1.1"
     },
     "require-dev": {

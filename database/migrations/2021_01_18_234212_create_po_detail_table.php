@@ -14,9 +14,10 @@ class CreatePoDetailTable extends Migration {
 	{
 		Schema::create('po_detail', function(Blueprint $table)
 		{
-			$table->integer('id')->index('id');
+			$table->integer('id', true);
 			$table->bigInteger('barang_id')->unsigned()->index('barang_id');
 			$table->integer('suplier_id')->index('suplier_id');
+			$table->integer('po_id')->index('po_id');
 			$table->float('qty', 10, 0);
 			$table->float('price', 10, 0);
 			$table->float('subtotal', 10, 0);

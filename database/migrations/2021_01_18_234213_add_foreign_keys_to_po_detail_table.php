@@ -16,6 +16,7 @@ class AddForeignKeysToPoDetailTable extends Migration {
 		{
 			$table->foreign('suplier_id', 'po_detail_ibfk_1')->references('idsupplier')->on('supplier')->onUpdate('CASCADE')->onDelete('CASCADE');
 			$table->foreign('barang_id', 'po_detail_ibfk_2')->references('id')->on('barang')->onUpdate('CASCADE')->onDelete('CASCADE');
+			$table->foreign('po_id', 'po_detail_ibfk_3')->references('id')->on('po')->onUpdate('CASCADE')->onDelete('CASCADE');
 		});
 	}
 
@@ -31,6 +32,7 @@ class AddForeignKeysToPoDetailTable extends Migration {
 		{
 			$table->dropForeign('po_detail_ibfk_1');
 			$table->dropForeign('po_detail_ibfk_2');
+			$table->dropForeign('po_detail_ibfk_3');
 		});
 	}
 

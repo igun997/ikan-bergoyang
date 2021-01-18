@@ -18,6 +18,7 @@ class CreatePoTable extends Migration {
 			$table->string('no_po', 100);
 			$table->date('po_date')->nullable();
 			$table->integer('status');
+			$table->text('notes', 65535)->nullable();
 			$table->date('updated_at')->nullable();
 			$table->date('created_at')->nullable();
 			$table->date('deleted_at')->nullable();
