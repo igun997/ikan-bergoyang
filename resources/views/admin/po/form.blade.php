@@ -1,74 +1,52 @@
 @extends('admin.layout')
 
-@section('js')
-    <script src="{{ asset('admin-asset/assets') }}/js/plugins/select2/select2.full.min.js"></script>
-@endsection
-@section('script')
-    <script>
-        $('.select2').select2();
-
-        $('.gambar').on('change', function(){
-            var input = this;
-            var url = $(this).val();
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('.img-preview').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        });
-    </script>
-@endsection
-
 @section('css')
-    <link rel="stylesheet" href="{{ asset('admin-asset/assets') }}/js/plugins/select2/select2.min.css">
-    <link rel="stylesheet" href="{{ asset('admin-asset/assets') }}/js/plugins/select2/select2-bootstrap.min.css">
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css" integrity="sha512-TQQ3J4WkE/rwojNFo6OJdyu6G8Xe9z8rMrlF9y7xpFbQfW5g8aSWcygCQ4vqRiJqFsDsE1T6MoAOMJkFXlrI9A==" crossorigin="anonymous" />
 @endsection
+
 @section('style')
-    <style>
-        .img-preview{
-            width: 100px;
-            margin-bottom: 20px;
-            display: block;
-        }
-    </style>
+
 @endsection
 
 @section('content')
-<h2 class="content-heading">{{ $title }} Supplier</h2>
+    <h2 class="content-heading">{{$title}}</h2>
 
-<!-- Dynamic Table Full -->
-<div class="block">
-    <div class="block-header block-header-default">
-        <a href="{{ url('admin/supplier') }}" class="btn btn-success btn-sm mb-25"><i class="fa fa-list"></i> Daftar Supplier</a>
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="block">
+                <div class="block-content block-content-full">
+                    <form action="" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="no_po">Kode PO</label>
+                            <input type="text" class="form-control" name="no_po" value="{{\App\Casts\PoHelper::no_po()}}" id="no_po" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="po_date">Tanggal PO</label>
+                            <input type="text" class="form-control date" value="{{date("Y-m-d")}}" name="po_date" id="po_date"  />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Lanjutkan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="block-content">
-        @include('message')
-        <form class="form-horizontal" action="{{ $url }}" method="post" enctype="multipart/form-data">
-            @csrf
-            @if($title != 'Tambah')
-                @method('put')
-            @endif
-            <div class="form-group row">
-                <label class="col-12">Nama</label>
-                <div class="col-md-12">
-                    <input type="text" name="nama" value="{{ @old('nama') ?? @$supplier->nama }}" class="form-control" placeholder="Masukan nama supplier">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-12">No Telpon</label>
-                <div class="col-md-12">
-                    <input type="text" name="notelp" value="{{ @old('notelp') ?? @$supplier->notelp }}" class="form-control" placeholder="Masukan no telpon supplier    ">
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-12 text-right">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<!-- END Dynamic Table Full -->
 @endsection
+
+@section('js')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function (){
+            $("#po_date").datepicker({
+                format:"yyyy-mm-dd"
+            });
+        })
+    </script>
+@endsection
+

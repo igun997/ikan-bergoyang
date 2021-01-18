@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $notelp
  * @property int|null $isdelete
  * 
- * @property PoDetail $po_detail
+ * @property Collection|PoDetail[] $po_details
  *
  * @package App\Models
  */
@@ -36,8 +37,8 @@ class Supplier extends Model
 		'isdelete'
 	];
 
-	public function po_detail()
+	public function po_details()
 	{
-		return $this->hasOne(PoDetail::class, 'suplier_id');
+		return $this->hasMany(PoDetail::class, 'suplier_id');
 	}
 }

@@ -41,9 +41,12 @@ Route::group(['middleware' => 'auth'], function(){
         Route::prefix("po")->namespace("Admin")->name("po.")->group(function (){
             Route::get("/","PoController@index")->name("list");
             Route::get("/add","PoController@add")->name("add");
-            Route::get("/detail","PoController@detail")->name("detail");
+            Route::post("/add","PoController@add_action")->name("add.action");
+            Route::get("/detail/{id}","PoController@detail")->name("detail");
             Route::get("/barang/{id}","PoController@barang")->name("barang");
-            Route::get("/update_status/{id}","PoController@update_status")->name("update_status");
+            Route::get("/barang/{id}/add","PoController@barang_add")->name("barang.add");
+            Route::post("/barang/{id}/add","PoController@barang_add_action")->name("barang.add.action");
+            Route::get("/update_status/{id?}","PoController@update_status")->name("update_status");
             Route::get("/penerimaan/{id}","PoController@penerimaan")->name("penerimaan");
             Route::get("/penerimaan/{id}/add","PoController@penerimaan_add")->name("penerimaan.add");
             Route::post("/penerimaan/{id}/add","PoController@penerimaan_add_action")->name("penerimaan.add.action");

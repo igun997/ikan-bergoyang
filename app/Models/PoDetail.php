@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $barang_id
  * @property int $suplier_id
+ * @property int $po_id
  * @property float $qty
  * @property float $price
  * @property float $subtotal
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property Supplier $supplier
  * @property Barang $barang
+ * @property Po $po
  * @property Collection|PoReceived[] $po_receiveds
  *
  * @package App\Models
@@ -34,13 +36,12 @@ use Illuminate\Database\Eloquent\Model;
 class PoDetail extends Model
 {
 	protected $table = 'po_detail';
-	public $incrementing = false;
 	public $timestamps = false;
 
 	protected $casts = [
-		'id' => 'int',
 		'barang_id' => 'int',
 		'suplier_id' => 'int',
+		'po_id' => 'int',
 		'qty' => 'float',
 		'price' => 'float',
 		'subtotal' => 'float',
@@ -54,9 +55,9 @@ class PoDetail extends Model
 	];
 
 	protected $fillable = [
-		'id',
 		'barang_id',
 		'suplier_id',
+		'po_id',
 		'qty',
 		'price',
 		'subtotal',
@@ -77,8 +78,13 @@ class PoDetail extends Model
 		return $this->belongsTo(Barang::class);
 	}
 
+	public function po()
+	{
+		return $this->belongsTo(Po::class);
+	}
+
 	public function po_receiveds()
 	{
-		return $this->hasMany(PoReceived::class, 'po_detail_id', 'id');
+		return $this->hasMany(PoReceived::class);
 	}
 }

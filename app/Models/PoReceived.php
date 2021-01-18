@@ -38,6 +38,6 @@ class PoReceived extends Model
 
 	public function po_detail()
 	{
-		return $this->belongsTo(PoDetail::class, 'po_detail_id', 'id');
+		return $this->belongsTo(PoDetail::class);
 	}
 }
