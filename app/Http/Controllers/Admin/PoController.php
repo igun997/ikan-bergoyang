@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Casts\PoDetailStatus;
 use App\Casts\PoStatus;
+use App\Models\Barang;
 use App\Models\Po;
 use App\Models\PoDetail;
 use App\Models\PoReceived;
+use App\Models\Supplier;
 use App\Traits\ViewTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -75,8 +77,8 @@ class PoController extends Controller
         $is_pemerimaan = false;
         $received = null;
         if ($req->has("detail")){
-            $id = $req->has("detail");
-            $received = PoReceived::where(["po_detail_id"=>$id])->get();
+            $id_detail = $req->detail;
+            $received = PoReceived::where(["po_detail_id"=>$id_detail])->get();
             $is_pemerimaan = true;
         }
         return $this->loadView("detail",compact("title","detail","received","is_pemerimaan"));
@@ -111,7 +113,7 @@ class PoController extends Controller
                     "created_at"=>date("Y-m-d")
                 ];
                 $detail->barang->update(["stok"=>($detail->barang->stok + $item)]);
-                $is_completed[] = 0;
+                $is_completed[] = -1;
                 $detail->status = PoDetailStatus::BARANG_SEDANG_TERIMA;
             }else{
                 $is_completed[] = 1;
@@ -143,5 +145,44 @@ class PoController extends Controller
         }
         return back()->withErrors(["msg"=>"Data Gagal Di Ubah"]);
 
+    }
+
+    public function barang_add($id)
+    {
+        $detail = Po::findOrFail($id);
+        $barang = Barang::orderBy("stok","asc")->get();
+        $suplier = Supplier::all();
+        $title = "Tambah Barang Di PO";
+        return $this->loadView("form_barang",compact("title","barang","detail","suplier"));
+    }
+
+    public function barang_add_action(Request $req,$id)
+    {
+        $req->validate([
+            "qty"=>"required",
+            "suplier_id"=>"required",
+            "id_barang"=>"required",
+        ]);
+
+        $object = new PoDetail();
+        $object->barang_id = $req->id_barang;
+        $object->price = $object->barang->harga;
+        $object->po_id = $id;
+        $object->suplier_id = $req->suplier_id;
+        $object->qty = $req->qty;
+        $object->subtotal = $object->barang->harga * $object->qty;
+        $object->status = PoDetailStatus::MENUNGGU_PROSES_SUPLIER;
+
+        $create = PoDetail::create($object->toArray());
+        if ($create){
+            return back()->with(["msg"=>"OK"]);
+        }
+        return back()->withErrors(["msg"=>"Barang gagal di tambahkan"]);
+    }
+
+    public function barang_delete($id,$id_detail)
+    {
+        PoDetail::find($id_detail)->delete();
+        return back()->with(["msg"=>"OK"]);
     }
 }

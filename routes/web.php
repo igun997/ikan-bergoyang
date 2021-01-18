@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth'], function(){
             Route::get("/detail/{id}","PoController@detail")->name("detail");
             Route::get("/barang/{id}","PoController@barang")->name("barang");
             Route::get("/barang/{id}/add","PoController@barang_add")->name("barang.add");
+            Route::get("/barang/{id}/delete/{id_barang}","PoController@barang_delete")->name("barang.delete");
             Route::post("/barang/{id}/add","PoController@barang_add_action")->name("barang.add.action");
             Route::get("/update_status/{id?}","PoController@update_status")->name("update_status");
             Route::get("/penerimaan/{id}","PoController@penerimaan")->name("penerimaan");

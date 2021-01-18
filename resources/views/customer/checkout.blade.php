@@ -1,6 +1,9 @@
 @extends('customer.layout')
 
 @section('content')
+    @php
+        $user_detail = \App\Models\UsersDetail::where(["iduser"=>\Illuminate\Support\Facades\Auth::user()->id])->first();
+    @endphp
     <div id="all">
         <div id="content">
             <div class="container">
@@ -16,7 +19,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="checkout_name">Name</label>
-                                                <input type="text" id="checkout_name" class="form-control" name="nama" placeholder="Name" required="required" value="{{ @$delivery->nama ? @$delivery->nama : auth()->user()->nama }}">
+                                                <input readonly type="text" id="checkout_name" class="form-control" name="nama" placeholder="Name" required="required" value="{{ @$delivery->nama ? @$delivery->nama : auth()->user()->nama }}">
                                             </div>
                                         </div>
                                     </div>
@@ -24,23 +27,24 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="checkout_email">Email</label>
-                                                <input type="email" id="checkout_email" class="form-control" name="email" placeholder="Email" required="required" value="{{ @$delivery->email ? @$delivery->email : auth()->user()->email }}">
+                                                <input readonly type="email" id="checkout_email" class="form-control" name="email" placeholder="Email" required="required" value="{{ @$delivery->email ? @$delivery->email : auth()->user()->email }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-username">Alamat Lengkap</label>
-                                            <textarea name="alamat" rows="5" placeholder="Masukkan Alamat Lengkap" class="form-control">{{ $delivery['detail']['alamat'] }}</textarea>
+                                            <textarea readonly name="alamat" rows="5" placeholder="Masukkan Alamat Lengkap" class="form-control">{{ $user_detail->alamat }}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-username">Provinsi</label>
-                                            <select name="idprovinsi" class="form-control" id="provinsi" onchange="getKota()">
+                                            <select readonly name="idprovinsi" class="form-control" id="provinsi" onchange="getKota()">
                                                 <option value="">-- Pilih Provinsi --</option>
+
                                                 @foreach ($provinsi as $prov)
-                                                    @if($prov->idprovinsi == $delivery['detail']['idprovinsi'])
+                                                    @if($prov->idprovinsi == $user_detail->idprovinsi)
                                                         <option value="{{$prov->idprovinsi}}" selected>{{$prov->nama}}</option>
                                                     @else
                                                         <option value="{{$prov->idprovinsi}}">{{$prov->nama}}</option>
@@ -52,10 +56,10 @@
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-username">Kota</label>
-                                            <select name="idkota" class="form-control" id="kota" onchange="getOngkir()">
+                                            <select readonly name="idkota" class="form-control" id="kota" onchange="getOngkir()">
                                                 <option value="">-- Pilih Kota --</option>
                                                 @foreach ($kota as $kot)
-                                                    @if($kot->idkota == $delivery['detail']['idkota'])
+                                                    @if($kot->idkota == $user_detail->idkota)
                                                         <option value="{{$kot->idkota}}" selected>{{$kot->nama}}</option>
                                                     @else
                                                         <option value="{{$kot->idkota}}">{{$kot->nama}}</option>
@@ -67,7 +71,7 @@
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-username">No. Telepon</label>
-                                            <input type="text" name="no_telp" class="form-control" placeholder="Masukkan no. telepon" value="{{ $delivery['detail']['telepon'] }}">
+                                            <input readonly type="text" name="no_telp" class="form-control" placeholder="Masukkan no. telepon" value="{{ $delivery['detail']['telepon'] }}">
                                         </div>
                                     </div>
                                 </div>

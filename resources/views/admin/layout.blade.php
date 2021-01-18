@@ -169,9 +169,8 @@ MAIN CONTENT LAYOUT
                             <li><a href="{{ url('/admin/kategori') }}" class="{{ request()->is('admin/kategori*') ? 'active' : '' }}"><i class="si si-menu"></i> <span class="sidebar-mini-hide">Data Kategori</span></a></li>
                             <li><a href="{{ url('/admin/supplier') }}" class="{{ request()->is('admin/supplier*') ? 'active' : '' }}"><i class="si si-social-dropbox"></i> <span class="sidebar-mini-hide">Data Supplier</span></a></li>
                             <hr>
-                            <li><a href="{{ url('/admin/permintaan') }}" class="{{ request()->is('admin/permintaan*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Permintaan Pembelian</span></a></li>
-                            <li><a href="{{ url('/admin/pembelian') }}" class="{{ request()->is('admin/pembelian*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Pesanan Pembelian</span></a></li>
-                            <li><a href="{{ url('/admin/retur-pembelian') }}" class="{{ request()->is('admin/retur-pembelian*') ? 'active' : '' }}"><i class="si si-loop"></i> <span class="sidebar-mini-hide">Retur Pembelian</span></a></li>
+                            <li><a href="{{ route("po.list") }}" class="{{ request()->is('admin/po*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Purchase Order</span></a></li>
+
                         @else
                             <li><a href="{{ url('/admin/transaksi') }}" class="{{ request()->is('admin/transaksi*') ? 'active' : '' }}"><i class="si si-logout"></i> <span class="sidebar-mini-hide">Transaksi Penjualan</span></a></li>
                             <li><a href="{{ url('/admin/pembayaran') }}" class="{{ request()->is('admin/pembayaran') ? 'active' : '' }}"><i class="si si-drawer"></i> <span class="sidebar-mini-hide">Konfirmasi Bayar</span></a></li>

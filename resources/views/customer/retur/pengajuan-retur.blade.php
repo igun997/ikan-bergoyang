@@ -45,7 +45,7 @@
                                             <div class="col-12">
                                                 <label for="reason">Alasan Retur Barang :</label>
                                                 <div class="col-md-12">
-                                                    <textarea class="form-control" name="reason" cols="20" rows="5" placeholder="Masukkan Alasan Retur Barang">{{ @old('reason') ?? @$retur->reason }}</textarea>
+                                                    <textarea minlength="15" maxlength="250" required class="form-control" name="reason" cols="20" rows="5" placeholder="Masukkan Alasan Retur Barang">{{ @old('reason') ?? @$retur->reason }}</textarea>
                                                 </div>
                                             </div>
                                         </div>

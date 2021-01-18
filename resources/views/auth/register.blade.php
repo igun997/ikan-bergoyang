@@ -108,19 +108,19 @@ MAIN CONTENT LAYOUT
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-username">Nama Lengkap</label>
-                                            <input type="text" name="nama" class="form-control" placeholder="Masukkan Nama Lengkap" value="{{ @old('nama') }}">
+                                            <input required minlength="10" maxlength="100" type="text" name="nama" class="form-control" placeholder="Masukkan Nama Lengkap" value="{{ @old('nama') }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-username">Alamat Lengkap</label>
-                                            <textarea name="alamat" rows="5" placeholder="Masukkan Alamat Lengkap" class="form-control">{{ @old('alamat') }}</textarea>
+                                            <textarea minlength="4" required name="alamat" rows="5" placeholder="Masukkan Alamat Lengkap" class="form-control">{{ @old('alamat') }}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-username">Provinsi</label>
-                                            <select name="provinsi" class="form-control">
+                                            <select required name="provinsi" class="form-control">
                                                 <option value="">-- Pilih Provinsi --</option>
                                                 @foreach ($provinsi as $prov)
                                                     <option value="{{$prov->idprovinsi}}">{{$prov->nama}}</option>
@@ -131,7 +131,7 @@ MAIN CONTENT LAYOUT
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-username">Kota</label>
-                                            <select name="kota" class="form-control">
+                                            <select required name="kota" class="form-control">
                                                 <option value="">-- Pilih Kota --</option>
                                                 @foreach ($kota as $kot)
                                                     <option value="{{$kot->idkota}}">{{$kot->nama}}</option>
@@ -142,26 +142,26 @@ MAIN CONTENT LAYOUT
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-username">No. Telepon</label>
-                                            <input type="text" name="telp" class="form-control" placeholder="Masukkan no. telepon" value="{{ @old('telp') }}">
+                                            <input required minlength="10" maxlength="15" type="text" name="telp" class="form-control" placeholder="Masukkan no. telepon" value="{{ @old('telp') }}">
                                         </div>
                                     </div>
                                     <h5>Informasi Akun</h5>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-username">Email</label>
-                                            <input type="email" name="email" class="form-control" placeholder="Email" value="{{ @old('email') }}">
+                                            <input required maxlength="100" minlength="5" type="email" name="email" class="form-control" placeholder="Email" value="{{ @old('email') }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-password">Password</label>
-                                            <input type="password" name="password" class="form-control" placeholder="Password">
+                                            <input maxlength="30" min="5" required type="password" name="password" class="form-control" placeholder="Password">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-password">Konfirmasi Password</label>
-                                            <input type="password" name="confpassword" class="form-control" placeholder="Konfirmasi Password">
+                                            <input  maxlength="30" min="5" required type="password" name="confpassword" class="form-control" placeholder="Konfirmasi Password">
                                         </div>
                                     </div>
                                     <div class="form-group row mb-0">
