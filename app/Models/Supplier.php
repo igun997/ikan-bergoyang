@@ -6,7 +6,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $notelp
  * @property int|null $isdelete
  * 
- * @property Collection|Pembelian[] $pembelians
+ * @property PoDetail $po_detail
  *
  * @package App\Models
  */
@@ -37,8 +36,8 @@ class Supplier extends Model
 		'isdelete'
 	];
 
-	public function pembelians()
+	public function po_detail()
 	{
-		return $this->hasMany(Pembelian::class, 'idsupplier');
+		return $this->hasOne(PoDetail::class, 'suplier_id');
 	}
 }

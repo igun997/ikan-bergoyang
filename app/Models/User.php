@@ -25,7 +25,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  * 
  * @property Collection|Cart[] $carts
- * @property Collection|Permintaan[] $permintaans
  * @property Collection|Transaksi[] $transaksis
  * @property UsersDetail $users_detail
  *
@@ -56,11 +55,6 @@ class User extends Model
 	public function carts()
 	{
 		return $this->hasMany(Cart::class);
-	}
-
-	public function permintaans()
-	{
-		return $this->hasMany(Permintaan::class, 'iduser');
 	}
 
 	public function transaksis()

@@ -157,10 +157,7 @@ MAIN CONTENT LAYOUT
                             <li><a href="{{ url('/admin/user') }}" class="{{ request()->is('admin/user*') ? 'active' : '' }}"><i class="si si-users"></i> <span class="sidebar-mini-hide">Data User</span></a></li>
                             <li><a href="{{ url('/admin/supplier') }}" class="{{ request()->is('admin/supplier*') ? 'active' : '' }}"><i class="si si-social-dropbox"></i> <span class="sidebar-mini-hide">Data Supplier</span></a></li>
                             <hr>
-                            <li><a href="{{ url('/admin/permintaan') }}" class="{{ request()->is('admin/permintaan*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Permintaan Pembelian</span></a></li>
-                            <li><a href="{{ url('/admin/pembelian') }}" class="{{ request()->is('admin/pembelian*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Pesanan Pembelian</span></a></li>
-                            <li><a href="{{ url('/admin/retur-pembelian') }}" class="{{ request()->is('admin/retur-pembelian*') ? 'active' : '' }}"><i class="si si-loop"></i> <span class="sidebar-mini-hide">Retur Pembelian</span></a></li>
-                            <li><a href="{{ url('/admin/pembelian-report') }}" class="{{ request()->is('admin/pembelian-report') ? 'active' : '' }}"><i class="si si-docs"></i> <span class="sidebar-mini-hide">Laporan Pembelian</span></a></li>
+                            <li><a href="{{ route("po.list") }}" class="{{ request()->is('admin/po*') ? 'active' : '' }}"><i class="si si-login"></i> <span class="sidebar-mini-hide">Purchase Order</span></a></li>
                             <hr>
                             <li><a href="{{ url('/admin/transaksi') }}" class="{{ request()->is('admin/transaksi*') ? 'active' : '' }}"><i class="si si-logout"></i> <span class="sidebar-mini-hide">Transaksi Penjualan</span></a></li>
                             <li><a href="{{ url('/admin/pembayaran') }}" class="{{ request()->is('admin/pembayaran') ? 'active' : '' }}"><i class="si si-drawer"></i> <span class="sidebar-mini-hide">Konfirmasi Bayar</span></a></li>
@@ -187,7 +184,7 @@ MAIN CONTENT LAYOUT
             <!-- Sidebar Content -->
         </div>
         <!-- END Sidebar Scroll Container -->
-    </nav>  
+    </nav>
     <!-- END Sidebar -->
 
     <!-- Header -->

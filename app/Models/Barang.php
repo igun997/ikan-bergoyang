@@ -28,8 +28,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * 
  * @property Kategori $kategori
  * @property Collection|Cart[] $carts
- * @property Collection|DetailPermintaan[] $detail_permintaans
  * @property Collection|DetailTransaksi[] $detail_transaksis
+ * @property PoDetail $po_detail
  *
  * @package App\Models
  */
@@ -64,13 +64,13 @@ class Barang extends Model
 		return $this->hasMany(Cart::class);
 	}
 
-	public function detail_permintaans()
-	{
-		return $this->hasMany(DetailPermintaan::class, 'idbarang');
-	}
-
 	public function detail_transaksis()
 	{
 		return $this->hasMany(DetailTransaksi::class);
+	}
+
+	public function po_detail()
+	{
+		return $this->hasOne(PoDetail::class);
 	}
 }
