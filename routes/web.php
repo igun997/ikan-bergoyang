@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth'], function(){
         #po
         Route::prefix("po")->namespace("Admin")->name("po.")->group(function (){
             Route::get("/","PoController@index")->name("list");
+            Route::get("/add","PoController@add")->name("add");
             Route::get("/detail","PoController@detail")->name("detail");
             Route::get("/barang/{id}","PoController@barang")->name("barang");
             Route::get("/update_status/{id}","PoController@update_status")->name("update_status");
