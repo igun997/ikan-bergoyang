@@ -71,7 +71,7 @@
                                     <div class="form-group row">
                                         <div class="col-12">
                                             <label for="login-username">No. Telepon</label>
-                                            <input readonly type="text" name="no_telp" class="form-control" placeholder="Masukkan no. telepon" value="{{ $delivery['detail']['telepon'] }}">
+                                            <input readonly type="text" name="no_telp" class="form-control" placeholder="Masukkan no. telepon" value="{{ $user_detail->telepon }}">
                                         </div>
                                     </div>
                                 </div>

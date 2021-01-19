@@ -30,7 +30,7 @@ class CheckoutController extends Controller
         $data['totalPayment'] = $totalPayment;
         $data['delivery'] = null;
         $data['provinsi']   = Provinsi::all();
-        $data['kota']       = Kota::where('idprovinsi', $data['delivery']['detail']['idprovinsi'])->get();
+        $data['kota']       = Kota::all();
         return view('customer.checkout', $data);
     }
 
