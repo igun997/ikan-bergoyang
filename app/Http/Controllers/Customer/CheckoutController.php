@@ -28,7 +28,7 @@ class CheckoutController extends Controller
             $totalPayment += $cart->qty * $cart->barang->harga;
         }
         $data['totalPayment'] = $totalPayment;
-        $data['delivery'] = User::with('detail.provinsi', 'detail.kota')->where('id', auth()->user()->id)->first();
+        $data['delivery'] = null;
         $data['provinsi']   = Provinsi::all();
         $data['kota']       = Kota::where('idprovinsi', $data['delivery']['detail']['idprovinsi'])->get();
         return view('customer.checkout', $data);
