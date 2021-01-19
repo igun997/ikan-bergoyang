@@ -8,6 +8,16 @@
     <script src="{{ asset('admin-asset/assets') }}/js/pages/be_tables_datatables.js"></script>
     <script>
         $("table").DataTable();
+        $(document).ready(function (){
+            $("table").find(".tolak").on("click",function (){
+                let href = $(this).data("href");
+                let id = $(this).data("id");
+                let alasan = prompt("Alasan Penolakan");
+                if (alasan){
+                    location.href = href+"&msg="+alasan
+                }
+            })
+        })
     </script>
 @endsection
 
@@ -61,7 +71,7 @@
                                 @endif
                                 @if(\Illuminate\Support\Facades\Auth::user()->level == 1 && \App\Casts\PoStatus::MENUNGGU_VERIFIKASI_OWNER === $row->status)
                                     <a href="{{route("po.update_status",[$row->id,"status"=>\App\Casts\PoStatus::MENUNGGU_KONFIRMASI_GUDANG])}}" class="btn btn-success btn-sm m-1">Verifikasi</a>
-                                    <button class="btn btn-danger btn-sm m-1 tolak" data-id="{{$row->id}}">Tolak</button>
+                                    <button class="btn btn-danger btn-sm m-1 tolak" data-href="{{route("po.update_status",[$row->id,"status"=>\App\Casts\PoStatus::DITOLAK_OWNER])}}" data-id="{{$row->id}}">Tolak</button>
                                 @endif
                                 @if((\Illuminate\Support\Facades\Auth::user()->level == 3 && (\App\Casts\PoStatus::MENUNGGU_KONFIRMASI_GUDANG == $row->status)) || (\Illuminate\Support\Facades\Auth::user()->level == 1 && (\App\Casts\PoStatus::MENUNGGU_KONFIRMASI_GUDANG == $row->status)))
                                     <a href="{{route("po.update_status",[$row->id,"status"=>\App\Casts\PoStatus::SEDANG_DIPROSES])}}" class="btn btn-success btn-sm m-1">Proses Pengadaan</a>
