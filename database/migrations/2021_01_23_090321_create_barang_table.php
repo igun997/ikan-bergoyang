@@ -20,6 +20,7 @@ class CreateBarangTable extends Migration {
 			$table->text('deskripsi', 65535)->nullable();
 			$table->bigInteger('kategori_id')->unsigned()->index('fk1_barang');
 			$table->float('harga', 10, 0)->nullable();
+			$table->float('harga_bibit', 10, 0)->nullable();
 			$table->integer('stok');
 			$table->string('gambar')->nullable();
 			$table->timestamps();
