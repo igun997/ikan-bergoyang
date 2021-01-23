@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <p style="color:gray">Segera lakukan pembayaran sebelum <b style="font-weight: bold;color:black">{{ $details['kadaluarsabayar'] }}</b>, agar pembelian anda dapat langsung diproses.</p>
-                <p><strong>Account : Atas Nama Konfeksi BUJANG</strong></p>
+                <p><strong>Account : Atas Nama Mang Ikan BUJANG</strong></p>
             </div>
             <div class="col-md-6">
                 <div class="box payment-method text-center">
