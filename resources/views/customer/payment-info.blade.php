@@ -18,19 +18,19 @@
                                         <div class="col-md-4">
                                             <div class="box payment-method text-center" style="height:200px">
                                                 <img src="{{ asset('customer/img/bni.png') }}" alt="payment" style="object-fit: contain">
-                                                <p>No. Rek : 34351 22312 3431 (A.n. Konfeksi J&S)</p>
+                                                <p>No. Rek : 34351 22312 3431 (A.n. Konfeksi BUJANG)</p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="box payment-method text-center" style="height:200px">
                                                 <img src="{{ asset('customer/img/ovo.png') }}" alt="payment" style="object-fit: contain">
-                                                <p>No. Rek : 34351 22312 3431 (A.n. Konfeksi J&S)</p>
+                                                <p>No. Rek : 34351 22312 3431 (A.n. Konfeksi BUJANG)</p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="box payment-method text-center" style="height:200px">
                                                 <img src="{{ asset('customer/img/cimb.png') }}" alt="payment" style="object-fit: contain">
-                                                <p>No. Rek : 1273812 31638 72 (A.n. Konfeksi J&S)</p>
+                                                <p>No. Rek : 1273812 31638 72 (A.n. Konfeksi BUJANG)</p>
                                             </div>
                                         </div>
                                         <div class="col-md-12 text-center">

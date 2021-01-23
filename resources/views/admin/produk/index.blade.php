@@ -48,7 +48,7 @@
 <div class="block">
     <div class="block-header block-header-default">
         <a href="{{ url('admin/barang/create') }}" class="btn btn-success btn-sm mb-25"><i class="fa fa-plus"></i> Tambah barang</a>
-        
+
         <div class="btn btn-info btn-sm mb-25" data-toggle="modal" data-target="#modal-filter"><i class="fa fa-file"></i> Buat Laporan</div>
     </div>
     <div class="block-content block-content-full">
@@ -63,6 +63,8 @@
                 <th>Deskripsi</th>
                 <th>Kategori</th>
                 <th>Stok</th>
+                <th>Umur Barang</th>
+                <th>Status Barang</th>
                 <th class="text-center" style="width: 150px;">Actions</th>
             </tr>
             </thead>
@@ -71,7 +73,7 @@
                 <tr>
                     <td>{{ $barang->kodebarang }}</td>
                     <td>
-                        <img class="img-preview" src="{{ $barang->gambar ? asset('uploads/barang/'.$barang->gambar) : '' }}" alt="gambar barang" onerror="this.src='{{ asset('backend/assets/images/placeholder.jpg') }}'">
+                        <img class="img-preview" src="{{ $barang->gambar ? asset('uploads/barang/'.$barang->gambar) : '' }}" alt="gambar barang" >
                         <strong>{{ $barang->nama_barang }}</strong>
                     </td>
                     <td>{{ $barang->deskripsi ?? '-' }}</td>
@@ -85,9 +87,12 @@
                         @endforeach
                     </td>
                     <td>{{ $barang->stok }}</td>
+                    <td align="center">{{ \App\Models\Barang::find($barang->id)->barang_perawatans()->groupBy("tgl_pakan")->count() }} Hari</td>
+                    <td align="center">{{ (\App\Models\Barang::find($barang->id)->barang_perawatans()->groupBy("tgl_pakan")->count() >= @\App\Models\Barang::find($barang->id)->barang_rules->first()->to_normal)?"Siap Jual":"Pembibitan" }}</td>
                     <td class="text-center">
-                        <a href="{{ url('admin/barang/'.$barang->id.'/edit') }}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                        <a href="#" class="btn btn-danger btnDelete" data-url="{{ url('/admin/barang/'.$barang->id) }}"><i class="fa fa-trash"></i></a>
+                        <a href="{{ url('admin/barang/'.$barang->id.'/edit') }}" class="btn m-2 btn-warning"><i class="fa fa-edit"></i></a>
+                        <a href="#" class="btn btn-danger m-2 btnDelete" data-url="{{ url('/admin/barang/'.$barang->id) }}"><i class="fa fa-trash"></i></a>
+                        <a href="{{route("piara.list",$barang->id)}}" class="btn btn-primary btn-sm m-2">Pemeliharaan</a>
                     </td>
                 </tr>
             @endforeach
@@ -129,7 +134,7 @@
                 <div class="row mt-3">
                     <div class="col-6">
                         <input type="number" class="form-control minstok" min=0 placeholder="Stok Terkecil">
-                    </div>                    
+                    </div>
                     <div class="col-6">
                         <input type="number" class="form-control maxstok" min=1 placeholder="Stok Terbesar">
                     </div>

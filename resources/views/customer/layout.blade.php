@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>J&S</title>
+    <title>BUJANG</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -41,7 +41,7 @@
             <div class="row">
                 <div class="col-lg-6 text-center text-lg-left"  style="color: #fff">
                     <ul class="menu list-inline mb-0">
-                        <i class="fa fa-phone"></i> +62 8577 7777 777 | Selamat Datang di J&S Collection
+                        <i class="fa fa-phone"></i> +62 8577 7777 777 | Selamat Datang di BUJANG Collection
                     </ul>
                 </div>
                 <div class="col-lg-6 text-center text-lg-right">
@@ -96,7 +96,7 @@
 
     </div>
     <nav class="navbar navbar-expand-lg">
-        <div class="container"><a href="{{ url('/') }}" class="navbar-brand home"><img src="{{ asset('customer/img') }}/Logo.png" alt="Obaju logo" class="d-none d-md-inline-block"><img src="{{ asset('customer/img') }}/logo-small.png" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">J&S - go to homepage</span></a>
+        <div class="container"><a href="{{ url('/') }}" class="navbar-brand home"><img style="height: 60px;width: auto" src="{{ asset('customer/img') }}/Logo.png" alt="Obaju logo" class="d-none d-md-inline-block"><img src="{{ asset('customer/img') }}/logo-small.png" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">BUJANG - go to homepage</span></a>
             <div class="navbar-buttons">
                 <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
                 <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a href="basket.html" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
@@ -146,7 +146,7 @@ _________________________________________________________
     <div class="container">
         <div class="row">
             <div class="col-lg-6 mb-2 mb-lg-0">
-                <p class="text-center text-lg-left">©2020 J&S.</p>
+                <p class="text-center text-lg-left">©2020 BUJANG.</p>
             </div>
             <div class="col-lg-6">
                 {{-- <p class="text-center text-lg-right">Template design by <a href="https://bootstrapious.com/p/big-bootstrap-tutorial">Bootstrapious</a>

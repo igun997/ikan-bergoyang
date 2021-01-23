@@ -102,8 +102,8 @@ class AdminReturController extends Controller
         $transaksi = Transaksi::where('id', $idTransaksi)->update(['status' => 9]);
         if($transaksi && $retur){
             $details = [
-                'title' => 'Email dari J&S Collection',
-                'body' => 'Permintaan retur anda berhasil dikonfirmasi. Harap mengirim barang kembali ke alamat berikut: 
+                'title' => 'Email dari BUJANG Collection',
+                'body' => 'Permintaan retur anda berhasil dikonfirmasi. Harap mengirim barang kembali ke alamat berikut:
                 Jl. Otitsta, Gg.Anggrek, Subang, Jawa Barat.',
             ];
             Mail::to('muhammadagungabdillah133@gmail.com')->send(new Tesemeil($details));
@@ -116,7 +116,7 @@ class AdminReturController extends Controller
         $transaksi = Transaksi::where('id', $idTransaksi)->update(['status' => 5]);
         if($transaksi && $retur){
             $details = [
-                'title' => 'Email dari J&S Collection',
+                'title' => 'Email dari BUJANG Collection',
                 'body' => 'Permintaan retur anda ditolak.',
             ];
             Mail::to('muhammadagungabdillah133@gmail.com')->send(new Tesemeil($details));
@@ -129,29 +129,29 @@ class AdminReturController extends Controller
         $transaksi = Transaksi::where('id', $idTransaksi)->update(['status' => 12]);
         if($transaksi && $retur){
             $details = [
-                'title' => 'Email dari J&S Collection',
+                'title' => 'Email dari BUJANG Collection',
                 'body' => 'Permintaan retur anda sedang di proses dan barang akan segera dikirimkan.',
             ];
             Mail::to('muhammadagungabdillah133@gmail.com')->send(new Tesemeil($details));
             return redirect()->back()->with(['info' => 'Retur diproses']);
         }
     }
-    
+
 
     public function exportLaporan(){
         $retur = new Retur();
         if(!empty(request()->status)){
             $status = request()->status;
             $retur = $retur->where('status', $status);
-        }       
+        }
         if(!empty(request()->start)){
             $start = request()->start;
             $retur = $retur->where('created_at', '>=', $start);
-        }          
+        }
         if(!empty(request()->end)){
             $end = request()->end;
             $retur = $retur->where('created_at', '<=', $end);
-        }     
+        }
 
         $data['returs'] = $retur->get();
 

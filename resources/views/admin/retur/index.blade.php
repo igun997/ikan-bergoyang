@@ -30,7 +30,7 @@
                         $('#retur_idtransaksi').html(retur.transaksi.id);
                         // $('#namaid').html(retur.delivery.nama);
                         var detail_barang = "";
-                        $.each(retur.transaksi.detail, function (idx, detail) { 
+                        $.each(retur.transaksi.detail, function (idx, detail) {
                              detail_barang += "<tr>";
                              detail_barang += "<td>"+(idx+1)+"</td>";
                              detail_barang += "<td>"+detail.barang.nama_barang+"</td>";
@@ -104,7 +104,7 @@
 
 <!-- Dynamic Table Full -->
 <div class="block">
-    <div class="block-header block-header-default">        
+    <div class="block-header block-header-default">
         <div class="btn btn-info btn-sm mb-25" data-toggle="modal" data-target="#modal-filter"><i class="fa fa-file"></i> Buat Laporan</div>
     </div>
     <div class="block-content block-content-full">
@@ -193,7 +193,7 @@
                     <div class="col-12">
                         <p>Filter Laporan</p>
                     </div>
-                </div>                
+                </div>
                 <div class="retur">
                     <div class="col-12">
                         <select type="text" class="form-control status">
@@ -207,7 +207,7 @@
                 <div class="retur mt-3">
                     <div class="col-6">
                         <input type="text" class="form-control start datepicker" placeholder="Tanggal Mulai">
-                    </div>                    
+                    </div>
                     <div class="col-6">
                         <input type="text" class="form-control end datepicker" placeholder="Tanggal Selesai">
                     </div>
@@ -249,7 +249,7 @@
                         <div class="row my-20">
                             <!-- Company Info -->
                             <div class="col-6">
-                                <p class="h3">KONFEKSI J&S</p>
+                                <p class="h3">KONFEKSI BUJANG</p>
                                 <address>
                                     Jalan hajianwar No.22b RT 01 RW 08 kel. Cibuntu<br>
                                     Kec. Bandung<br>
@@ -258,15 +258,15 @@
                                 </address>
                             </div>
                             <!-- END Company Info -->
-                
+
                             <!-- Client Info -->
                             <div class="col-6 text-right" id="client-info">
-                                
+
                             </div>
                             <!-- END Client Info -->
                         </div>
                         <!-- END Invoice Info -->
-                
+
                         <!-- Table -->
                         <div class="table-responsive push">
                             <table class="table table-bordered table-hover" id="tblDetailRetur">
@@ -281,7 +281,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                
+
                                 </tbody>
                             </table>
                         </div>

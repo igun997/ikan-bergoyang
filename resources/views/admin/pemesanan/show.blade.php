@@ -53,7 +53,7 @@
         <div class="row my-20">
             <!-- Company Info -->
             <div class="col-6">
-                <p class="h3">J&S</p>
+                <p class="h3">BUJANG</p>
                 <address>
                     Komp. Cibiru Indah<br>
                     Bandung<br>

@@ -33,6 +33,12 @@ Route::group(['middleware' => 'auth'], function(){
 
         //gudang
         Route::resource('/barang', 'Admin\BarangController');
+        Route::prefix("/pemeliharaan")->namespace("Admin")->name("piara.")->group(function (){
+            Route::get("/{id}","PemeliharaanController@index")->name("list");
+            Route::get("/{id}/delete","PemeliharaanController@del")->name("del");
+            Route::post("/{id}/create","PemeliharaanController@add_action")->name("create");
+            Route::post("/{id}/set","PemeliharaanController@set_aturan")->name("aturan");
+        });
         Route::resource('/kategori', 'Admin\KategoriController');
         Route::resource('/supplier', 'Admin\SupplierController');
         Route::resource('/daftarpemesanan', 'Admin\DaftarPemesananController');

@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
-    <title>J&S - Admin</title>
+    <title>BUJANG - Admin</title>
 
     <meta name="description" content="Codebase - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
     <meta name="author" content="pixelcave">
@@ -126,7 +126,6 @@ MAIN CONTENT LAYOUT
                         @if(auth()->user()->level == 1)
                             <div class="content-header-item">
                                 <a class="link-effect font-w700" href="{{ url('produk') }}">
-                                    <span class="font-size-xl text-dual-primary-dark">J</span><span class="font-size-xl text-primary">&S</span>
                                 </a>
                             </div>
                         @elseif(auth()->user()->level == 3)

@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deskripsi
  * @property int $kategori_id
  * @property float|null $harga
+ * @property float|null $harga_bibit
  * @property int $stok
  * @property string|null $gambar
  * @property Carbon|null $created_at
@@ -27,6 +28,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $deleted_at
  * 
  * @property Kategori $kategori
+ * @property Collection|BarangPerawatan[] $barang_perawatans
+ * @property Collection|BarangRule[] $barang_rules
  * @property Collection|Cart[] $carts
  * @property Collection|DetailTransaksi[] $detail_transaksis
  * @property Collection|PoDetail[] $po_details
@@ -41,6 +44,7 @@ class Barang extends Model
 	protected $casts = [
 		'kategori_id' => 'int',
 		'harga' => 'float',
+		'harga_bibit' => 'float',
 		'stok' => 'int'
 	];
 
@@ -50,6 +54,7 @@ class Barang extends Model
 		'deskripsi',
 		'kategori_id',
 		'harga',
+		'harga_bibit',
 		'stok',
 		'gambar'
 	];
@@ -57,6 +62,16 @@ class Barang extends Model
 	public function kategori()
 	{
 		return $this->belongsTo(Kategori::class);
+	}
+
+	public function barang_perawatans()
+	{
+		return $this->hasMany(BarangPerawatan::class);
+	}
+
+	public function barang_rules()
+	{
+		return $this->hasMany(BarangRule::class);
 	}
 
 	public function carts()

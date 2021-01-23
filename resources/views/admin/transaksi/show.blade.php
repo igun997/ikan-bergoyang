@@ -53,7 +53,7 @@
         <div class="row my-20">
             <!-- Company Info -->
             <div class="col-6">
-                <p class="h3">KONFEKSI J&S</p>
+                <p class="h3">KONFEKSI BUJANG</p>
                 <address>
                     Jalan hajianwar No.22b RT 01 RW 08 kel. Cibuntu<br>
                     Kec. Bandung<br>

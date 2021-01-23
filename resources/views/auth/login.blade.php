@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
-    <title>J&S - Login</title>
+    <title>BUJANG - Login</title>
 
     <meta name="description" content="Codebase - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
     <meta name="author" content="pixelcave">
@@ -89,9 +89,8 @@ MAIN CONTENT LAYOUT
                         <!-- Header -->
                         <div class="py-30 text-center">
                             <a class="link-effect font-w700" href="{{ url('/') }}">
-                                <span class="font-size-xl text-primary-dark">J</span><span class="font-size-xl">&S</span>
                             </a>
-                            <h1 class="h4 font-w700 mt-30 mb-10">Welcome to J&S</h1>
+                            <h1 class="h4 font-w700 mt-30 mb-10">Welcome to BUJANG</h1>
                             <h2 class="h5 font-w400 text-muted mb-0">Let's Sign In!</h2>
                         </div>
                         <!-- END Header -->

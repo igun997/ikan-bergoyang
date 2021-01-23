@@ -34,7 +34,7 @@ class TransaksiController extends Controller
         $transaksi = Transaksi::where('id', $id)->update(['status' => 3]);
         if($transaksi){
             $details = [
-                'title' => 'Email dari J&S Collection',
+                'title' => 'Email dari BUJANG Collection',
                 'body' => 'Bukti Pembayaran Anda berhasil dikonfirmasi. Harap menunggu resi yang akan kami kirimkan untuk Anda.',
             ];
             Mail::to('muhammadagungabdillah133@gmail.com')->send(new Tesemeil($details));
@@ -47,7 +47,7 @@ class TransaksiController extends Controller
         $transaksi = Transaksi::where('id', $id)->update(['status' => 7, 'kadaluarsabayar' => $kadaluarsa]);
         if($transaksi){
             $details = [
-                'title' => 'Email dari J&S Collection',
+                'title' => 'Email dari BUJANG Collection',
                 'body' => 'Bukti Pembayaran Anda ditolak karena alasan tidak sesuai. Kirim ulang bukti pembayaran valid Anda sebelum' . Carbon::parse($kadaluarsa)->format('d M Y H:i'),
                 'kadaluarsabayar' => Carbon::parse($kadaluarsa)->format('d M Y H:i')
             ];
@@ -138,13 +138,13 @@ class TransaksiController extends Controller
         $namabulan = $this->getNamaBulanIndo($bulan);
         // $data = Pembelian::whereMonth('created_at', $bulan)->orderBy('created_at', 'asc')->get();
         $query = "select a.tanggal, b.barang, b.stok, a.totalharga from (
-            select date(a.created_at) as tanggal, sum(a.total_harga) as totalharga from transaksi a 
+            select date(a.created_at) as tanggal, sum(a.total_harga) as totalharga from transaksi a
             inner join detail_transaksi c on a.id = c.transaksi_id
             where month(a.created_at) = $bulan and year(a.created_at) = $tahun and status = 5 group by date(a.created_at)
-        ) a 
+        ) a
         inner join (
-            select date(a.created_at) as tanggal, count(*) as barang, sum(c.qty) as stok from transaksi a 
-            inner join detail_transaksi c on a.id = c.transaksi_id 
+            select date(a.created_at) as tanggal, count(*) as barang, sum(c.qty) as stok from transaksi a
+            inner join detail_transaksi c on a.id = c.transaksi_id
             where month(a.created_at) = $bulan and year(a.created_at) = $tahun and status = 5 GROUP BY date(a.created_at)
         ) b on a.tanggal = b.tanggal";
         $data = DB::select(DB::raw($query));

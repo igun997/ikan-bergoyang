@@ -111,7 +111,7 @@ class CheckoutController extends Controller
                     'kadaluarsabayar' => Carbon::parse($transaksi['kadaluarsabayar'])->format('d M Y H:i')
                 ];
 
-                Mail::to('muhammadagungabdillah133@gmail.com')->send(new Tesemeil($details));
+//                Mail::to('muhammadagungabdillah133@gmail.com')->send(new Tesemeil($details));
                 return redirect('/payment-info/'.$queryTransaksi->id)->with('info', 'Checkout berhasil!');
             }else{
                 return redirect()->back()->with('error', 'Data checkout gagal disimpan.')->withInput($input);
